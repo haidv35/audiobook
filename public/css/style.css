@@ -1,0 +1,18 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body{
+    position: relative;
+}
+.footer {
+    position: relative;
+    bottom: 0;
+    left:0;
+    right:0;
+    width: 100%;
+    background-color: #f5f5f5;
+}
+
