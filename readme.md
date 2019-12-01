@@ -1,6 +1,6 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
-## About AUDIO BOOK SHOP
+
+# 						`AUDIO BOOK STORE`
 
 ##### This is an ecommerce site that sells audio books with the following outstanding features:
 
@@ -8,7 +8,7 @@
 - Quick purchase integrated "**Momo**" auto payment
 - Save the playback time when exiting
 
-## Platform used
+  ## 									Platform used
 
 1. Laravel 5.8.* : https://laravel.com/
 2. Looper Admin Template: https://uselooper.com/
@@ -22,8 +22,8 @@
 
 
 
-## Security Vulnerabilities
+## 								Security Vulnerabilities
 
 If you discover a security vulnerability within my application, please send an e-mail to **Dinh Hai** via [dinhviethai.job@gmail.com](mailto:dinhviethai.job@gmail.com). All security vulnerabilities will be promptly addressed.
 
-# audiobook
+# 
