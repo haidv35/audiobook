@@ -64,7 +64,7 @@
                                 <p class="text-danger text-center"> *Điền email và mật khẩu của tài khoản được liên kết với Momo</p>
                                 <div class="row my-2">
                                     <div class="col-4 d-flex align-items-center"><label for="email">Email</label></div>
-                                    <div class="col-8"><input type="text" class="form-control" name="email" value="{{ $email }}"></div>
+                                    <div class="col-8"><input type="text" class="form-control" name="email" value="{{ $gmail }}"></div>
                                 </div>
                                 <div class="row my-2">
                                     <div class="col-4 d-flex align-items-center"><label for="password">Mật khẩu ứng dụng</label></div>

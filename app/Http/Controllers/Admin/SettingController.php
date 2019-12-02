@@ -20,9 +20,10 @@ class SettingController extends Controller
             $emailAccount = Setting::where('name','momo_email')->get();
             $emailAccount = json_decode($emailAccount[0]->value);
 
-            $email = $emailAccount->email;
+            $gmail = $emailAccount->email;
             $password = $emailAccount->password;
-            return view('admin.settings.payments')->with(['qrStr'=>$qrStr,'bank'=>$bank,'email'=>$email,'password'=>$password]);
+
+            return view('admin.settings.payments')->with(['qrStr'=>$qrStr,'bank'=>$bank,'gmail'=>$gmail,'password'=>$password]);
         }
     }
     public function postPayment(Request $request,$type = null){

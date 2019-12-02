@@ -23,6 +23,9 @@
                                 aria-sort="ascending"> Mã đơn hàng </th>
                             <th class="align-middle sorting_asc" tabindex="0" aria-controls="listItemPurchased" rowspan="1"
                                 colspan="1" aria-label=" Mã đơn hàng"
+                                aria-sort="ascending"> Người mua </th>
+                            <th class="align-middle sorting_asc" tabindex="0" aria-controls="listItemPurchased" rowspan="1"
+                                colspan="1" aria-label=" Mã đơn hàng"
                                 aria-sort="ascending"> Trạng thái </th>
                             <th class="align-middle sorting_asc" tabindex="0" aria-controls="listItemPurchased" rowspan="1"
                                 colspan="1" aria-label=" Tổng tiền"
@@ -63,4 +66,5 @@
 
 <script src="/looper/assets/javascript/pages/dataTables.bootstrap.js"></script>
 <script src="/looper/assets/javascript/pages/dataTables-admin-orderList.js"></script>
+
 @endsection

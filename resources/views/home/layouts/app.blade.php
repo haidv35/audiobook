@@ -31,5 +31,10 @@
     <script src="/js/cart.js"></script>
     @yield('custom-footer')
     <script type="text/javascript" src="/formatCurrency/custom.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 </body>
 </html>

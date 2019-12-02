@@ -20,3 +20,4 @@
 <link href="/css/ui.css" rel="stylesheet" type="text/css" />
 <link href="/css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
 <link href="/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/css/footer-animate.css" rel="stylesheet" type="text/css" />

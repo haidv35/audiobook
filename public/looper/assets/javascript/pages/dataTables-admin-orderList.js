@@ -114,7 +114,6 @@ function () {
             next: '<i class="fa fa-lg fa-angle-right"></i>'
           }
         },
-        responsive: true,
         autoWidth: false,
         ajax: '/admin/order_list/orderListJson',
         deferRender: true,
@@ -126,6 +125,10 @@ function () {
         }, {
           data: 'order_code',
           className: 'align-middle'
+        },
+        {
+            data: 'user',
+            className: 'align-middle'
         },
         {
             data: 'status',
@@ -162,6 +165,11 @@ function () {
         columnDefs: [{
             targets: 2,
             render: function render(data, type, row, meta) {
+                return "<span class=\"badge badge-subtle badge-warning\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"".concat(row.username.concat(" ",row.email),"\">".concat(row.fullname, "</span>"));
+            }
+          },{
+            targets: 3,
+            render: function render(data, type, row, meta) {
                 switch(row.status){
                     case 'unpaid':
                         return "<span class=\"badge badge-subtle badge-warning\">".concat('Chưa thanh toán', "</span>");
@@ -178,7 +186,7 @@ function () {
                 }
             }
           },{
-          targets: 9,
+          targets: 10,
           render: function render(data, type, row, meta) {
             return "<a class=\"btn btn-sm btn-icon btn-secondary\" href=\"/admin/order_list/".concat(row.id, "\"><i class=\"fa fa-eye\"></i></a>");
           }

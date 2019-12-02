@@ -1,10 +1,16 @@
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content">
     <div class="container">
+        @if (0 != count($searchProduct))
+            <header class="section-heading">
+                <h3 class="section-title text-center">Sản phẩm tìm thấy</h3>
+            </header>
+        @else
+            <header class="section-heading">
+                <h3 class="section-title text-center">Không tìm thấy sản phẩm nào</h3>
+            </header>
+        @endif
 
-        <header class="section-heading">
-            <h3 class="section-title text-center">Sản phẩm tìm thấy</h3>
-        </header><!-- sect-heading -->
 
         <div class="row">
             @foreach ($searchProduct as $product)

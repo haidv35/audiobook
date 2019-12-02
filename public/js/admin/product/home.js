@@ -1,4 +1,4 @@
-$("button").click(function(t) {
+$(".remove-product-btn").click(function(t) {
     let id = $(this).attr("data-id");
     bootbox.confirm({
         size: "small",

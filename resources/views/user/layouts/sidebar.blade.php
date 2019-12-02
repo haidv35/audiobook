@@ -43,7 +43,7 @@
                 <a href="/user/orders" class="menu-link"><span class="menu-icon fa fa-list-alt "></span> <span class="menu-text">Danh Sách Đơn Hàng</span> </a> <!-- child menu -->
             </li>
             <li class="menu-item has-child {{ Request::is('user/purchased') ? 'has-active' : '' }}">
-                <a href="/user/purchased" class="menu-link"><span class="menu-icon fa fa-shopping-cart "></span> <span class="menu-text">Sản Phẩm Đã Mua</span> </a> <!-- child menu -->
+                <a href="/user/purchased" class="menu-link"><span class="menu-icon fa fa-shopping-cart "></span> <span class="menu-text">Sách của bạn</span></span> </a> <!-- child menu -->
             </li>
           </ul><!-- /.menu -->
         </nav><!-- /.stacked-menu -->

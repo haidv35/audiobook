@@ -93,8 +93,9 @@
           <!-- .nav -->
           <ul class="header-nav nav">
             <!-- .nav-item -->
-            <li class="nav-item dropdown header-nav-dropdown has-notified">
-              <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="oi oi-pulse"></span></a> <!-- .dropdown-menu -->
+            <li class="nav-item dropdown header-nav-dropdown">
+                    <a class="nav-link" href="/"><span class="oi oi-home"></span></a>
+              {{-- <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="oi oi-pulse"></span></a> <!-- .dropdown-menu -->
               <div class="dropdown-menu dropdown-menu-rich dropdown-menu-right">
                 <div class="dropdown-arrow"></div>
                 <h6 class="dropdown-header stop-propagation">
@@ -166,7 +167,7 @@
                   </a> <!-- /.dropdown-item -->
                 </div><!-- /.dropdown-scroll -->
                 <a href="user-activities.html" class="dropdown-footer">All activities <i class="fas fa-fw fa-long-arrow-alt-right"></i></a>
-              </div><!-- /.dropdown-menu -->
+              </div><!-- /.dropdown-menu --> --}}
             </li><!-- /.nav-item -->
             <!-- .nav-item -->
             <li class="nav-item dropdown header-nav-dropdown has-notified">

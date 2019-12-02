@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Order;
 use App\OrderDetail;
 use App\PaymentMethod;
+use App\User;
 
 use Carbon\Carbon;
 
@@ -31,21 +32,21 @@ class OrderListController extends Controller
         $data = array();
         $orders = json_decode(Order::all());
         foreach($orders as $order){
+            $order->username = User::find($order->user_id)->username;
+            $order->fullname = User::find($order->user_id)->firstname . " " . User::find($order->user_id)->lastname;
+            $order->email = User::find($order->user_id)->email;
+
+            $this->parseDateTime($order->ordered_at,$order->paid_at,$order->canceled_at);
+            $order->ordered_at = $this->ordered_at;
+            $order->paid_at = $this->paid_at;
+            $order->canceled_at = $this->canceled_at;
             if($order->payment_method_id != null){
                 $payment_method = Order::find($order->id)->payment_method;
                 $order->payment_method = strtoupper($payment_method->type);
-                $this->parseDateTime($order->ordered_at,$order->paid_at,$order->canceled_at);
-                $order->ordered_at = $this->ordered_at;
-                $order->paid_at = $this->paid_at;
-                $order->canceled_at = $this->canceled_at;
             }
             else{
                 $payment_method = Order::find($order->id)->payment_method;
                 $order->payment_method = '';
-                $this->parseDateTime($order->ordered_at,$order->paid_at,$order->canceled_at);
-                $order->ordered_at = $this->ordered_at;
-                $order->paid_at = $this->paid_at;
-                $order->canceled_at = $this->canceled_at;
             }
         }
         $data['data'] = $orders;
@@ -66,6 +67,9 @@ class OrderListController extends Controller
             $order = Order::find($order_id);
             $payment_method = PaymentMethod::all();
             $this->parseDateTime($order->ordered_at,$order->paid_at,$order->canceled_at);
+            $order->username = User::find($order->user_id)->username;
+            $order->fullname = User::find($order->user_id)->firstname . " " . User::find($order->user_id)->lastname;
+            $order->email = User::find($order->user_id)->email;
             $order->ordered_at = $this->ordered_at;
             $order->paid_at = $this->paid_at;
             $order->canceled_at = $this->canceled_at;

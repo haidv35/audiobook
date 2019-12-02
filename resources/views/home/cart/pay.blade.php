@@ -88,7 +88,12 @@
                                 <p>Lời nhắn: <span style="color:red;">{{ $paymentCodes[0]->code }}</span></p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                                <div class="col-lg-6">
+                                    <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">Đóng</button>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a href="/user/orders" class="btn btn-success btn-block">Hoàn thành</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -117,7 +122,12 @@
                                 <small>Momo được thanh toán tự động. Bạn vui lòng chờ 1-5 phút để thanh toán hoàn tất. Chú ý bạn phải nhập đúng lời nhắn nếu không đơn của bạn sẽ không được xác nhận!.</small>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                                <div class="col-lg-6">
+                                    <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">Đóng</button>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a href="/user/orders" class="btn btn-success btn-block">Hoàn thành</a>
+                                </div>
                             </div>
                         </div>
                     </div>

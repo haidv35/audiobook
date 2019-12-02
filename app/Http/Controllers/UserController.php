@@ -121,6 +121,7 @@ class UserController extends Controller
     }
 
     public function getListItemPurchased($product_id = null){
+        $recommendProduct = Product::limit(4)->inRandomOrder()->get();
         $list_items_purchased = collect();
         $orders = Order::where(['user_id'=>Auth::id(),'status'=>'paid'])->get();
         foreach($orders as $order){
@@ -135,7 +136,7 @@ class UserController extends Controller
             foreach($list_items_purchased as $item){
                 if(strval($item->id) === $product_id){
                     $product_links = $item->product_links;
-                    return view('user.items-purchased')->with(['product_info'=>$item,'product_links'=>$product_links]);
+                    return view('user.items-purchased')->with(['product_info'=>$item,'product_links'=>$product_links,'recommendProduct'=>$recommendProduct]);
                 }
             }
             return redirect()->route('user.homepage');

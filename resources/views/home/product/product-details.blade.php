@@ -1,6 +1,6 @@
 @extends('home.layouts.app')
 @section('app-main')
-<div class="row" style="margin:5rem 0 10rem 0;">
+<div class="row" style="margin:5rem 0 5rem 0;">
     <div class="card">
         <div class="row no-gutters">
             <aside class="col-lg-6">
@@ -100,6 +100,52 @@
         </div> <!-- row.// -->
     </div> <!-- card.// -->
 </div>
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-xl-6">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="text-center bg-dark text-light">Bình luận</h3>
+                </div>
+                {{-- <div class="col-12">
+
+
+                </div> --}}
+                <div id="fb-root"></div>
+                <div class="fb-comments" data-href="{{ URL::to('/') }}/product-details/{{ $product->id }}" data-order-by="time" data-width="100%" data-numposts="10" data-mobile="true"></div></<div>
+            </div>
+
+        </div>
+        <div class="col-xl-6">
+            <div class="col-lg-12">
+                <h3 class="text-center bg-dark text-light">Có thể bạn quan tâm</h3>
+            </div>
+            <div class="row">
+                @foreach ($recommendProduct as $item)
+                <div class="col-lg-6 mt-3">
+                    <div href="#" class="list-group-item list-group-item-action" target="_blank">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="list-group-item-figure rounded-left">
+                                    <img src="{{ $item->image}}" alt="" style="height:5rem;width:4rem;">
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                {{-- <div class="row"> --}}
+                                <p class="text-truncate" data-toggle="tooltip" data-placement="top" title="{{ $item->title }}">{{ $item->title }}</p>
+
+                                {{-- </div> --}}
+                                <a name="" id="" class="" href="/product-details/{{ $item->id }}" role="button">Xem chi tiết</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('custom-footer')
     <script>
@@ -108,6 +154,12 @@
             $(".login-before_order").bind('click',function(){
                 window.location.replace("{{ URL::to('/login') }}");
             });
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
         });
     </script>
+
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0"></script>
+
 @endsection

@@ -35,6 +35,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        parent::__construct();
         $this->middleware('guest')->except('logout');
         $this->username = $this->findUsername();
     }
@@ -45,7 +46,7 @@ class LoginController extends Controller
         request()->merge([$fieldType => $login]);
         return $fieldType;
     }
- 
+
     public function username()
     {
         return $this->username;

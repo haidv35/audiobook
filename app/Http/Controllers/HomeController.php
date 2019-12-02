@@ -16,14 +16,17 @@ use Carbon\Carbon;
 
 class HomeController extends Controller
 {
+    private $orderedProducts;
+    private $orders;
+    private $searchProduct;
+
     public function __construct()
     {
         parent::__construct();
+        $this->searchProduct();
     }
     //Initial function
 /****************************************************/
-    private $orderedProducts;
-    private $orders;
     public function getUserOrderedProducts(){
         $this->orderedProducts = collect();
         if(Auth::check()){
@@ -43,35 +46,30 @@ class HomeController extends Controller
     public function getProductsByType($type){
         return Product::where($type,1)->latest()->limit(8)->get();
     }
+    public function searchProduct(){
+        if(request()->has('s')){
+            $this->searchProduct = Product::where('title','LIKE',"%".request()->get('s')."%")->get();
+        }
+        else{
+            $this->searchProduct = NULL;
+        }
+    }
 /*****************************************************/
 
     //Homepage
     public function index()
     {
         $this->getUserOrderedProducts();
-        if(request()->has('search')){
-            $searchProduct = Product::where('title','LIKE',"%".request()->get('search')."%")->get();
-        }
-        else{
-            $searchProduct = NULL;
-        }
         $demoLinks = Product::where('demo_link','!=','0')->orWhere('demo_link','!=',NULL)->limit(2)->inRandomOrder()->get();
         $newProduct = $this->getProductsByType('new_product');
         $hotProduct = $this->getProductsByType('hot_product');
         $recommendProduct = Product::limit(8)->inRandomOrder()->get();
-        return view('home.home')->with(['demoLinks'=>$demoLinks,'searchProduct'=>$searchProduct,'newProduct'=>$newProduct,'hotProduct'=>$hotProduct,'recommendProduct'=>$recommendProduct,'orderedProducts'=>$this->orderedProducts]);
+        return view('home.home')->with(['demoLinks'=>$demoLinks,'searchProduct'=>$this->searchProduct,'newProduct'=>$newProduct,'hotProduct'=>$hotProduct,'recommendProduct'=>$recommendProduct,'orderedProducts'=>$this->orderedProducts]);
     }
 
-    //Search
-    public function search(Request $request){
-        $search_str = json_decode($request->getContent())->search_str;
-        $product = Product::where('title','LIKE',"%$search_str%")->get();
-        $output = '';
-        if(count($product) > 0){
-            // foreach($product as $key => $value){
-            //     $output = ''
-            // }
-        }
+    public function search(){
+        $this->getUserOrderedProducts();
+        return view('home.search')->with(['orderedProducts'=>$this->orderedProducts,'searchProduct'=>$this->searchProduct]);
     }
 
     //Page
@@ -104,9 +102,10 @@ class HomeController extends Controller
     public function productDetail($id = null){
         $this->getUserOrderedProducts();
         $getProductById = Product::with('category')->find($id);
+        $recommendProduct = Product::limit(4)->inRandomOrder()->get();
         if($id == null || $getProductById == null) return redirect()->route('homepage');
         else{
-            return view('home.product.product-details')->with(['product'=>$getProductById,'orderedProducts'=>$this->orderedProducts]);
+            return view('home.product.product-details')->with(['product'=>$getProductById,'orderedProducts'=>$this->orderedProducts,'recommendProduct'=>$recommendProduct]);
         }
     }
 
@@ -123,22 +122,23 @@ class HomeController extends Controller
     }
     public function postCheckout(Request $request){
         $carts = json_decode($request->getContent());
-        $orderedList = collect();
-        //Get item purchased
-        $orders = Order::where(['user_id'=>Auth::id(),'status'=>'paid'])->get();
-        foreach($orders as $order){
-            foreach($order->order_details as $orderDetail){
-                $orderedList->add($orderDetail);
-            }
-        }
-        //item purchased => display errors
-        foreach($orderedList as $item){
-            foreach($carts as $cart){
-                if($cart->id == $item->id){
-                    return $this->display_response("999","Don't exploit!!!");
-                }
-            }
-        }
+        // $orderedList = collect();
+        // //Get item purchased
+        // $orders = Order::where(['user_id'=>Auth::id(),'status'=>'paid'])->get();
+        // foreach($orders as $order){
+        //     foreach($order->order_details as $orderDetail){
+        //         $orderedList->add($orderDetail);
+        //     }
+        // }
+        // //item purchased => display errors
+        // foreach($orderedList as $item){
+        //     foreach($carts as $cart){
+        //         if($cart->id == $item->id){
+        //             return $this->display_response("999","Don't exploit!!!");
+        //         }
+        //     }
+        // }
+
         //save cart
         $amount = 0;
         foreach ($carts as $key => $cart) {

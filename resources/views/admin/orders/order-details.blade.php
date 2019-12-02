@@ -60,6 +60,26 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-3  d-flex align-items-center justify-content-start">
+                            <label for="status">Tên người mua</label>
+                        </div>
+                        <div class="col-lg-12 col-xl-9">
+                            <input type="text" class="form-control" name="user_fullname" id="user_fullname" placeholder="" disabled="" value="{{ $order->fullname }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-3  d-flex align-items-center justify-content-start">
+                            <label for="status">Email người mua</label>
+                        </div>
+                        <div class="col-lg-12 col-xl-9">
+                            <input type="text" class="form-control" name="user_email" id="user_email" placeholder="" disabled="" value="{{ $order->email }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-3  d-flex align-items-center justify-content-start">
                             <label for="amount">Tổng số tiền</label>
                         </div>
                         <div class="col-lg-12 col-xl-9">

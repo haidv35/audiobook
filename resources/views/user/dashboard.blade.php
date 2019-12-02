@@ -21,7 +21,7 @@
                     <div class="col">
                         <!-- .metric -->
                         <a href="javascript:void(0)" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> Số sản phẩm đã mua </h2>
+                            <h2 class="metric-label"> Sách đã mua </h2>
                             <p class="metric-value h3">
                                 <sub><i class="fas fa-clipboard-list"></i></sub> <span class="value">{{ $paid_product_count }}</span>
                             </p>
@@ -40,7 +40,7 @@
                     <div class="col">
                         <!-- .metric -->
                         <a href="javascript:void(0)" class="metric metric-bordered align-items-center">
-                            <h2 class="metric-label"> Số tiền còn nợ </h2>
+                            <h2 class="metric-label"> Số tiền chưa thanh toán </h2>
                             <p class="metric-value h3">
                                 <sub><i class="fa fa-dollar-sign"></i></sub> <span class="value price">{{ $balance }}</span>
                             </p>

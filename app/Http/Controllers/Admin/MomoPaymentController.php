@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Webklex\IMAP\Facades\Client;
 use Sunra\PhpSimple\HtmlDomParser;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 use App\Order;
 use App\Setting;
@@ -27,7 +29,7 @@ class MomoPaymentController extends Controller
 
     public function index()
     {
-        MomoPaymentCheck::dispatch();
+        MomoPaymentCheck::dispatchNow();
     }
     public function spamToInbox(){
         try{

@@ -1,7 +1,7 @@
 @extends('user.layouts.app')
 @section('app-main')
 <div class="container-fluid">
-    @if ($status != 'paid')
+    @if ($status == 'unpaid')
         <div class="card-footer d-flex align-items-center mb-4">
             <a href="#" class="btn btn-lg btn-primary w-100 mr-3" data-toggle="modal" data-target="#bank">Chuyển Khoản</a>
             <a href="#" class="btn btn-lg btn-danger w-100" data-toggle="modal" data-target="#momo">Momo</a>

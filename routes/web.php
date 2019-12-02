@@ -14,7 +14,7 @@
 
 // Route::get('/', 'HomeController@index')->name('homepage')->middleware('verified');
 Route::get('/', 'HomeController@index')->name('homepage');
-Route::get('/search', 'HomeController@search')->name('search');
+Route::any('/search', 'HomeController@search')->name('search');
 Route::get('/about', 'HomeController@about')->name('about');
 Route::get('/tutorial', 'HomeController@tutorial')->name('tutorial');
 Route::get('/contact', 'HomeController@contact')->name('contact');

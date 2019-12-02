@@ -27,11 +27,11 @@ class UsersTableSeeder extends Seeder
             [
                 'firstname' => 'Mr',
                 'lastname' => 'kezy',
-                'username' => 'cl0v3r',
+                'username' => 'Mrkezy',
                 // 'email_verified_at' => Carbon::now()->timestamp,
                 'email' => 'taan@lat.com.vn',
                 'password' => bcrypt('hoilamgi123@'),
-                'phone' => '0372791909',
+                'phone' => '0123456789',
                 'address' => 'HN',
                 'role' => 'admin'
             ]
