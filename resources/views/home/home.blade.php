@@ -15,7 +15,6 @@
     {{-- @include('home.product.brand') --}}
 @endsection
 @section('custom-footer')
-    @include('home.layouts.footer-animate')
     <script src="https://cdn.plyr.io/3.5.6/plyr.js"></script>
     <script>
         const player1 = new Plyr('#player-1');

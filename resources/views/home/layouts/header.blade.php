@@ -4,12 +4,17 @@
 <meta http-equiv="cache-control" content="max-age=604800" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<meta property=”fb:app_id” content=”773358413132697″/>
-<meta property=”fb:admins” content=”100002405493958″/>
+<meta property="og:url" content="url bài viết" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Tiêu đề" />
+<meta property="og:description" content="Giới thiệu" />
+<meta property="og:image" content="hình ảnh" />
+<meta property="fb:app_id" content="773358413132697"/>
+<meta property="fb:admins" content="100002405493958"/>
 @yield('meta-tag')
 <title>{{ $title }}</title>
 
-<link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link href="/images/logo.png" rel="shortcut icon" type="image/x-icon">
 
 @yield('custom-header')
 <!-- Bootstrap4 files-->

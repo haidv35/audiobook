@@ -221,7 +221,7 @@
     }
 </style>
 <script>
-    jQuery(document).ready(function () {
+    $(document).ready(function () {
         var defaultToggleState = true;
         var localStorageValue = localStorage["displayToggled"];
         // if localStorageValue not set then use default
@@ -230,19 +230,19 @@
         localStorage["displayToggled"] = displayToggled;
 
         if (localStorage["displayToggled"] == 'true') {
-            jQuery('.social-button-content').show();
-            jQuery('.user-support').removeClass("hide-rung");
+            $('.social-button-content').show();
+            $('.user-support').removeClass("hide-rung");
         } else {
-            jQuery('.social-button-content').hide();
-            jQuery('.user-support').addClass("hide-rung");
+            $('.social-button-content').hide();
+            $('.user-support').addClass("hide-rung");
         }
 
-        jQuery('.user-support').click(function (event) {
+        $('.user-support').click(function (event) {
             var value = localStorage["displayToggled"];
             localStorage["displayToggled"] =
                 value === undefined ? false : (value === "true" ? false : true);
-            jQuery('.social-button-content').slideToggle(function (event) {
-                jQuery('.user-support').toggleClass("hide-rung");
+            $('.social-button-content').slideToggle(function (event) {
+                $('.user-support').toggleClass("hide-rung");
             });
         });
     });

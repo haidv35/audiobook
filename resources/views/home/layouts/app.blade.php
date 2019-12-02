@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    @include('home.layouts.header',['title'=>'Tastore'])
+    @include('home.layouts.header',['title'=>'Tri Thức Nhân Loại'])
 </head>
 <body>
     @includeIf('home.layouts.header-section',['logo'=>$logo])
@@ -10,10 +10,12 @@
     <div class="app-main">
         @yield('app-main')
     </div>
+
     {{-- @includeIf('home.layouts.footer') --}}
     {!! $footer !!}
     <!-- jQuery -->
     <script src="/js/jquery-2.0.0.min.js" type="text/javascript"></script>
+    @include('home.layouts.footer-animate')
     <!-- Bootstrap4 files-->
     <script src="/js/bootstrap.bundle.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="/pnotify/dist/iife/PNotify.js"></script>

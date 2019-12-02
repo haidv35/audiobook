@@ -89,7 +89,7 @@
 
 @endsection
 @section('custom-footer')
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0"></script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v5.0&appId=773358413132697&autoLogAppEvents=1"></script>
 <script src="https://cdn.plyr.io/3.5.6/plyr.js"></script>
 <script>
     const player = new Plyr('#audio');
