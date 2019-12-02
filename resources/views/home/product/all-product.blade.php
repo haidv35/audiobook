@@ -51,8 +51,7 @@
                                 </div> <!-- info-price-detail // -->
                                 <br>
                                 <p>
-                                <a href="{{ route('product-details',['path'=>$product->id])}}" class="btn btn-primary btn-block"> Chi tiết </a>
-
+                                <a href="{{ route('product-details',['id'=>$product->id,'path'=>$product->path])}}" class="btn btn-primary btn-block"> Chi tiết </a>
                                     @includeIf('home.product.cart-button', ['view' => 'all-product'])
                                 </p>
                             </div> <!-- info-aside.// -->

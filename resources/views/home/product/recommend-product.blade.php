@@ -11,10 +11,10 @@
             @foreach ($recommendProduct as $product)
             <div class="col-lg-3">
                 <div class="card card-product-grid">
-                    <a href="/product-details/{{$product->id}}" class="img-wrap"> <img
+                    <a href="{{ route('product-details',['id'=>$product->id,'path'=>$product->path])}}" class="img-wrap"> <img
                     src="{{ $product->image }}"> </a>
                     <figcaption class="info-wrap">
-                        <a href="/product-details/{{$product->id}}" class="title">{{ $product->title }}</a>
+                        <a href="{{ route('product-details',['id'=>$product->id,'path'=>$product->path])}}" class="title">{{ $product->title }}</a>
                         {{-- text-truncate --}}
                         <div class="mt-2 row">
                             <div class="col-6">

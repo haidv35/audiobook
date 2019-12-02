@@ -66,11 +66,10 @@
                             </div>
                         </div>
                     </div> --}}
-                    
+                    @php
+                        $check_ordered = 0;
+                    @endphp
                     @if (0 != count($orderedProducts))
-                        @php
-                            $check_ordered = 0;
-                        @endphp
                         @foreach ($orderedProducts as $item)
                             @if ($item[0]->product_id === $product->id)
                                 @php
@@ -113,7 +112,7 @@
 
                 </div> --}}
                 <div id="fb-root"></div>
-                <div class="fb-comments" data-href="{{ URL::to('/') }}/product-details/{{ $product->id }}" data-order-by="time" data-width="100%" data-numposts="10" data-mobile="true"></div></<div>
+                <div class="fb-comments" data-href="{{ route('product-details',['id'=>$product->id,'path'=>$product->path])}}" data-order-by="time" data-width="100%" data-numposts="10" data-mobile="true"></div></<div>
             </div>
 
         </div>
@@ -136,7 +135,7 @@
                                 <p class="text-truncate" data-toggle="tooltip" data-placement="top" title="{{ $item->title }}">{{ $item->title }}</p>
 
                                 {{-- </div> --}}
-                                <a name="" id="" class="" href="/product-details/{{ $item->id }}" role="button">Xem chi tiết</a>
+                                <a name="" id="" class="" href="{{ route('product-details',['id'=>$item->id,'path'=>$item->path])}}" role="button">Xem chi tiết</a>
 
                             </div>
                         </div>

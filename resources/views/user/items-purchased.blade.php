@@ -56,7 +56,7 @@
             </div>
             <div class="row mt-3 justify-content-center">
                 <div id="fb-root"></div>
-                <div class="fb-comments" data-href="{{ URL::to('/user/purchased/').$product_info->id }}" data-order-by="time" data-width="" data-numposts="10" data-mobile=""></div>
+                <div class="fb-comments" data-href="{{ route('product-details',['id'=>$product_info->id,'path'=>$product_info->path])}}" data-order-by="time" data-width="" data-numposts="10" data-mobile=""></div>
             </div>
         </div>
         <div class="col-lg-4">
@@ -75,7 +75,7 @@
                                     <p data-toggle="tooltip" data-placement="top" title="{{ $item->title }}">{{ $item->title }}</p>
                                 </div>
                                 <div class="row">
-                                    <a name="" id="" class="" href="/product-details/{{ $item->id }}" role="button">Xem chi tiết</a>
+                                    <a name="" id="" class="" href="{{ route('product-details',['id'=>$item->id,'path'=>$item->path])}}" role="button">Xem chi tiết</a>
                                 </div>
                             </div>
                         </div>

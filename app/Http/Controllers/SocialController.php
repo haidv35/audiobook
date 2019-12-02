@@ -46,7 +46,6 @@ class SocialController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ],[
             'username.*' => "Tài khoản đã tồn tại trong hệ thống vui lòng sử dụng tài khoản khác",
-            'email.*' => "Email đã tồn tại trong hệ thống vui lòng sử dụng email khác",
             'phone.*' => "Số điện thoại đã tồn tại trong hệ thống vui lòng sử dụng sđt khác",
             'required' => 'Bạn chưa nhập :attribute.',
             'min' => 'Phải nhập tối thiểu :min kí tự.',
@@ -70,7 +69,6 @@ class SocialController extends Controller
         }
         else{
             return $this->display_response(404,$validator->errors());
-            // return $this->display_response(404,"Bạn đang nhập sai hoặc nhập thiếu thông tin!");
         }
     }
     // function createUser($getInfo, $provider)

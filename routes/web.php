@@ -37,7 +37,7 @@ Route::group(['prefix' => 'momo_payment_automatic'], function () {
 //Product
 // Route::get('all-product/{sort?}', 'HomeController@display_all_product');
 Route::get('all-product', 'HomeController@displayAllProduct');
-Route::get('product-details/{id?}', 'HomeController@productDetail')->name('product-details');
+Route::get('product-details/{id?}/{path?}', 'HomeController@productDetail')->name('product-details');
 
 
 #user
