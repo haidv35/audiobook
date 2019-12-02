@@ -4,6 +4,8 @@
 <meta http-equiv="cache-control" content="max-age=604800" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta property=”fb:app_id” content=”773358413132697″/>
+<meta property=”fb:admins” content=”100002405493958″/>
 @yield('meta-tag')
 <title>{{ $title }}</title>
 

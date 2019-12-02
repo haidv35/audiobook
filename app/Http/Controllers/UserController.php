@@ -69,12 +69,15 @@ class UserController extends Controller
         $user = User::find(Auth::id());
         if(Hash::check($request->old_password, $user->password)){
             if($request->password == ''){
-                if($request->fb_id == null){
-                    $request->merge(['fb_id' => 0]);
+                if(empty($request->fb_id)){
+                    $request->merge(['fb_id' => '0']);
                 }
                 User::where('id',Auth::id())->update($request->except(['_token','username','password','old_password']));
             }
             else{
+                if(empty($request->fb_id)){
+                    $request->merge(['fb_id' => '0']);
+                }
                 $request->merge(['password'=>bcrypt($request->password)]);
                 // dd($request->all());
                 User::where('id',Auth::id())->update($request->except(['_token','username','old_password']));

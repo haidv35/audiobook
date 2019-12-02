@@ -1,8 +1,8 @@
 <header class="section-header">
     <section class="header-main border-bottom">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-3 col-6">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-3">
                     <a href="/" class="brand-wrap">
                         <img class="logo" src="{{ $logo }}">
                     </a> <!-- brand-wrap.// -->
@@ -14,7 +14,7 @@
                         </div>
                     </form>
                 </div> <!-- col.// -->
-                <div class="col-lg-4 col-sm-6 col-12">
+                <div class="col-lg-4 col-sm-6 col-12 d-flex justify-content-center">
                     <div class="widgets-wrap float-md-right">
                         <div class="widget-header  mr-3">
                             <a href="/cart" class="icon icon-sm rounded-circle border" data-toggle="tooltip" data-placement="bottom" title="Xem giỏ hàng"><i
