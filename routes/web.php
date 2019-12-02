@@ -37,13 +37,17 @@ Route::group(['prefix' => 'momo_payment_automatic'], function () {
 //Product
 // Route::get('all-product/{sort?}', 'HomeController@display_all_product');
 Route::get('all-product', 'HomeController@displayAllProduct');
-Route::get('product-details/{id?}', 'HomeController@productDetail');
+Route::get('product-details/{id?}', 'HomeController@productDetail')->name('product-details');
 
 
 #user
 
 // Auth::routes(['verify' => true]);
 Auth::routes();
+Route::get('auth/redirect/{provider}', 'SocialController@redirect');
+Route::get('callback/{provider}', 'SocialController@callback');
+Route::post('facebook', 'SocialController@facebookLogin')->name('facebook.login');
+
 Route::get('logout',function(){
     Auth::logout();
     return redirect()->route('homepage');

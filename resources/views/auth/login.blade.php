@@ -9,8 +9,7 @@
             <h4 class="card-title mb-4">Đăng Nhập</h4>
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-                <a href="#" class="btn btn-facebook btn-block mb-2"> <i class="fab fa-facebook-f"></i> &nbsp  Đăng nhập với Facebook</a>
-                <a href="#" class="btn btn-google btn-block mb-4"> <i class="fab fa-google"></i> &nbsp Đăng nhập với Google</a>
+
                 <div class="form-group">
                     <input name="username" class="form-control @error('username') is-invalid @enderror" placeholder="Tài khoản" type="text" value="{{ old('username') }}" required autocomplete="username" autofocus>
                     @error('username')
@@ -36,6 +35,8 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block"> Đăng nhập  </button>
                 </div> <!-- form-group// -->
+                <a href="{{ url('/auth/redirect/facebook') }}" class="btn btn-facebook btn-block mb-2"> <i class="fab fa-facebook-f"></i> &nbsp  Đăng nhập với Facebook</a>
+                {{-- <a href="#" class="btn btn-google btn-block mb-4"> <i class="fab fa-google"></i> &nbsp Đăng nhập với Google</a> --}}
             </form>
             </div> <!-- card-body.// -->
         </div> <!-- card .// -->
@@ -53,3 +54,4 @@
         }
     </script>
 @endsection
+

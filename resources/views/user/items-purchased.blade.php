@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
 @endsection
 @section('app-main')
-<div class="container" style="margin-top:5rem;overflow:scroll">
+<div class="container" style="margin-top:5rem;">
     <div class="row">
         <div class="col-lg-8">
             <div class="row">
@@ -11,7 +11,7 @@
                     <a href="#"><img src="{{ $product_info->image }}" alt="" class="img-fluid" style="height:15rem;"></a>
                 </div>
                 <div class="col-lg-9">
-                    <h4>{{ $product_info->title }} gồm: {{ count($product_links) }} phần</h4>
+                    <h4 class="text-center">{{ $product_info->title }} gồm: {{ count($product_links) }} phần</h4>
                     @php
                         $product_link = explode('/',parse_url($product_links[0]->content)['path']);
                         if(isset($product_link) && isset($product_link[3])){

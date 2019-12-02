@@ -66,22 +66,23 @@
                             </div>
                         </div>
                     </div> --}}
-                    @php
-                        $check_ordered = 0;
-                    @endphp
+                    
                     @if (0 != count($orderedProducts))
-                        @foreach ($orderedProducts[0] as $item)
-                            @if ($item->product_id === $product->id)
+                        @php
+                            $check_ordered = 0;
+                        @endphp
+                        @foreach ($orderedProducts as $item)
+                            @if ($item[0]->product_id === $product->id)
                                 @php
                                     $check_ordered = 1;
                                 @endphp
-                                @if ($item->status == 'paid')
-                                    <a href="/user/purchased/{{ $item->product_id }}" class="btn btn-success btn-block">
+                                @if ($item[0]->status == 'paid')
+                                    <a href="/user/purchased/{{ $item[0]->product_id }}" class="btn btn-success btn-block">
                                         <i class="fas fa-shopping-cart"></i>
                                         <span class="text">Xem nội dung sản phẩm</span>
                                     </a>
-                                @elseif($item->status == 'unpaid')
-                                    <a href="/pay/{{ $item->order_code}}" class="btn btn-outline-warning btn-block">Thanh toán <i
+                                @elseif($item[0]->status == 'unpaid')
+                                    <a href="/pay/{{ $item[0]->order_code}}" class="btn btn-outline-warning btn-block">Thanh toán <i
                                     class="fa fa-check"></i>
                                     </a>
                                 @endif

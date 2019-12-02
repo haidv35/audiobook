@@ -16,6 +16,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "kalnoy/nestedset": "^5.0",
         "laravel/framework": "5.8.*",
+        "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.8",
         "maatwebsite/excel": "^3.1",

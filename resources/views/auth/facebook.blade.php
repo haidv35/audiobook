@@ -6,13 +6,13 @@
     <!-- ============================ COMPONENT REGISTER   ================================= -->
         <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
             <article class="card-body">
-            <header class="mb-4"><h4 class="card-title">Đăng Kí</h4></header>
-            <form method="POST" action="{{ route('register') }}">
+            <header class="mb-4"><h4 class="card-title">Đăng nhập với facebook</h4></header>
+            <form method="POST" action="{{ route('facebook.login') }}" id="facebook-form">
                 @csrf
                     <div class="form-row">
                         <div class="col form-group">
                             <label>Họ</label>
-                            <input type="text" class="form-control @error('firstname') is-invalid @enderror" placeholder="" name="firstname" value="{{ old('firstname') }}" required autocomplete="firstname" autofocus>
+                            <input type="text" class="form-control @error('firstname') is-invalid @enderror" placeholder="" name="firstname" value="{{ $getInfo->firstname }}" disabled autocomplete="firstname" autofocus>
                             @error('firstname')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -21,7 +21,7 @@
                         </div> <!-- form-group end.// -->
                         <div class="col form-group">
                             <label>Tên</label>
-                            <input type="text" class="form-control @error('lastname') is-invalid @enderror" placeholder="" name="lastname" value="{{ old('lastname') }}" required autocomplete="lastname" autofocus>
+                            <input type="text" class="form-control @error('lastname') is-invalid @enderror" placeholder="" name="lastname" value="{{ $getInfo->lastname }}" disabled autocomplete="lastname" autofocus>
                             @error('lastname')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -31,7 +31,7 @@
                     </div> <!-- form-row end.// -->
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="" name="email" value="{{ $getInfo->email }}" disabled autocomplete="email" autofocus>
                         @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -56,6 +56,15 @@
                             </span>
                         @enderror
                     </div> <!-- form-group end.// -->
+                    <div class="form-group">
+                        <label>Facebook</label>
+                        <input type="text" class="form-control @error('facebook') is-invalid @enderror" placeholder="" name="facebook" value="{{ $getInfo->id }}" disabled autocomplete="facebook" autofocus>
+                        @error('facebook')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <label>Tài khoản</label>
                         <input type="text" class="form-control @error('username') is-invalid @enderror" placeholder="" name="username" value="{{ old('username') }}" autocomplete="username" autofocus>
@@ -86,12 +95,8 @@
                         </div> <!-- form-group end.// -->
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block"> Đăng Kí  </button>
+                        <button type="button" class="btn btn-primary btn-block" id="continue"> Tiếp tục  </button>
                     </div>
-                    <a href="{{ url('/auth/redirect/facebook') }}" class="btn btn-facebook btn-block mb-2"> <i class="fab fa-facebook-f"></i> &nbsp  Đăng nhập với Facebook</a>
-                    {{-- <div class="form-group">
-                        <label class="custom-control custom-checkbox"> <input type="checkbox" class="custom-control-input" checked=""> <div class="custom-control-label"> Tôi đồng ý với <a href="#">các điều khoản và chính sách</a>  </div> </label>
-                    </div> --}}
                 </form>
             </article><!-- card-body.// -->
         </div> <!-- card .// -->
@@ -103,5 +108,10 @@
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 @endsection
-
+@section('custom-footer')
+    <script>
+        let loginUrl = "{{ route('facebook.login') }}";
+    </script>
+    <script src="/js/login-facebook.js"></script>
+@endsection
 

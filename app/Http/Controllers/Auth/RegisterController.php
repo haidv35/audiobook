@@ -53,12 +53,15 @@ class RegisterController extends Controller
             'firstname' => ['required', 'string', 'max:30'],
             'lastname' => ['required', 'string', 'max:30'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'string', 'min:10'],
+            'phone' => ['required', 'string', 'min:10', 'unique:users'],
             'address' => ['required', 'string', 'max:100'],
-            'username' => ['required', 'string', 'max:50'],
+            'username' => ['required', 'string', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
         $messages = [
+            'username.*' => "Tài khoản đã tồn tại trong hệ thống vui lòng sử dụng tài khoản khác",
+            'email.*' => "Email đã tồn tại trong hệ thống vui lòng sử dụng email khác",
+            'phone.*' => "Số điện thoại đã tồn tại trong hệ thống vui lòng sử dụng sđt khác",
             'required' => 'Bạn chưa nhập :attribute.',
             'min' => 'Phải nhập tối thiểu :min kí tự.',
             'max' => 'Chỉ dược nhập tối đa :max kí tự.',
@@ -75,6 +78,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if($data['username'] == null){
+            $email = explode('@', $data['email']);
+            $data['username'] = $email[0];
+        }
         return User::create([
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
