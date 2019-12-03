@@ -15,7 +15,7 @@
         }
         @media screen and (max-width: 600px) {
             .list-group-item{
-                padding: 1rem 0rem 3rem 2rem!important;
+                padding: 0.5rem 0rem 3rem 2rem!important;
             }
         }
     </style>
