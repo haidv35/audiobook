@@ -20,7 +20,7 @@
                                 {{ Form::open(array('files'=>'true','method' => 'post','id'=>'upload-form')) }}
                                     @csrf
                                     <fieldset>
-                                        <legend>Thêm Mới Sản Phẩm</legend>
+                                        <legend>Thêm Mới Sản Phẩm Thường</legend>
                                         <div class="form-group">
                                             <div class="form-group mt-2">
                                                 {!! Form::label('category_id', 'Danh mục') !!}
@@ -115,9 +115,6 @@
 @endsection
 
 @section('custom-footer')
-<script type="text/javascript" src="/pnotify/dist/iife/PNotify.js"></script>
-<script type="text/javascript" src="/pnotify/dist/iife/PNotifyButtons.js"></script>
-<script type="text/javascript" src="/pnotify/dist/iife/PNotifyHistory.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/12.4.0/classic/ckeditor.js"></script>
 <script src="/ckeditor/custom-admin-product.js"></script>
 <script src="/pnotify/showStackBottomRight.js"></script>

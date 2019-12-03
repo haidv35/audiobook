@@ -4,10 +4,11 @@
 <meta http-equiv="cache-control" content="max-age=604800" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<meta property="og:url" content="url bài viết" />
+<meta property="og:url" content="{{ url()->full() }}" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Tiêu đề" />
-<meta property="og:description" content="Giới thiệu" />
+<meta property="og:title" content="Sách nói - Tri Thức Nhân Loại" />
+<meta property="og:description" content="Sách nói , Sách kinh doanh , sách dạy con , sách đời sống , sách tư duy , sách giao dục hay nhất mọi thời đại" />
+<meta property="og:image" content="https://trithucnhanloai.com/images/logo.png" />
 <meta property="og:image" content="hình ảnh" />
 <meta property="fb:app_id" content="773358413132697"/>
 <meta property="fb:admins" content="100002405493958"/>

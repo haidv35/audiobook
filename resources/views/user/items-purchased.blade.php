@@ -2,19 +2,21 @@
 @section('custom-header')
     <link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
     <style>
-        .list-group{
+        .custom-list-group{
             height: 7rem;
             overflow:scroll;
             -webkit-overflow-scrolling: touch;
         }
-        .list-group-item{
+        .custom-list-group-item{
             padding: 1rem 0rem 1rem 3.5rem!important;
             border-bottom: 1px dashed black!important;
             margin-bottom: 1px!important;
-
+        }
+        .custom-list-group-item-action:hover{
+            background:#1ba244;
         }
         @media screen and (max-width: 600px) {
-            .list-group-item{
+            .custom-list-group-item{
                 padding: 0.5rem 0rem 3rem 2rem!important;
             }
         }
@@ -23,7 +25,7 @@
 @section('app-main')
 <div class="container" style="margin-top:5rem;">
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-8">
             <div class="row">
                 <div class="col-lg-3 d-flex justify-content-center">
                     <a href="#"><img src="{{ $product_info->image }}" alt="" class="img-fluid" style="height:15rem;"></a>
@@ -46,7 +48,7 @@
                                 type="audio/mp3" />
                         </audio>
                     @endif
-                    <ul id="playlist" class="list-group border-top">
+                    <ul id="playlist" class="list-group custom-list-group border-top">
                         @php
                             $counter = 1;
                         @endphp
@@ -61,7 +63,7 @@
                                 }
                             @endphp
                             @if ($product_link != '')
-                                <li class="list-group-item @if($counter == 1) active @endif">
+                                <li class="list-group-item custom-list-group-item @if($counter == 1) active @endif">
                                     <a href="https://www.googleapis.com/drive/v3/files/{{ $product_link }}?alt=media&key=AIzaSyAgaMIobc0MLNnfZAHIpY8OgNqsnGExMZ8">{{$item->product->title . " - part " . $counter}}</a>
                                 </li>
                             @endif
@@ -77,11 +79,14 @@
                 <div class="fb-comments" data-href="{{ route('product-details',['id'=>$product_info->id,'path'=>$product_info->path])}}" data-order-by="time" data-width="" data-numposts="10" data-mobile=""></div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-4">
+            <div class="row justify-content-center bg-dark text-light">
+                <h4>Có thể bạn quan tâm</h4>
+            </div>
             <div class="row">
                 @foreach ($recommendProduct as $item)
-                <div class="col-lg-12 mt-2">
-                    <div href="#" class="list-group-item list-group-item-action" target="_blank">
+                <div class="col-12 mt-2">
+                    <div href="#" class="list-group-item list-group-item-action custom-list-group-item-action" target="_blank">
                         <div class="row">
                             <div class="col-6 ">
                                 <div class="list-group-item-figure">

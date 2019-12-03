@@ -45,6 +45,7 @@ class ProductRequest extends FormRequest
         return [
             'required' => 'Chưa nhập :attribute',
             'category_id.required' => 'Chưa có category',
+            'image_link.required' => "Chưa nhập hình ảnh",
             'image_link.regex' => 'Hình ảnh phải là url',
             'title.required' => "Chưa nhập tiêu đề",
             'short_description.required' => "Chưa nhập giới thiệu nhanh",

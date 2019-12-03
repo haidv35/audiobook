@@ -79,16 +79,19 @@ Route::group(['middleware' => ['is.admin','web']], function () {
             Route::get('/','Admin\ProductController@index');
             Route::post('status','Admin\ProductController@setStatus')->name('admin.product.status');
             Route::get('create','Admin\ProductController@create')->name('admin.product.create');
+            Route::post('store','Admin\ProductController@store')->name('admin.product.store');
+            Route::group(['prefix' => 'configurable'], function () {
+                Route::get('create','Admin\ProductController@createConfigurable')->name('admin.product.createConfigurable');
+                Route::post('store','Admin\ProductController@storeConfigurable')->name('admin.product.storeConfigurable');
+            });
+            Route::get('edit/{id}','Admin\ProductController@edit')->name('admin.product.edit');
+            Route::post('update/{id}','Admin\ProductController@update')->name('admin.product.update');
+            Route::any('delete/{id}','Admin\ProductController@destroy')->name('admin.product.destroy');
             //Import excel
             Route::get('import_export','Admin\ProductController@importExportView')->name('admin.product.import_export');
             Route::post('import','Admin\ProductController@import')->name('admin.product.import');
             Route::any('export','Admin\ProductController@export')->name('admin.product.export');
             // Route::get('export_product_view','Admin\ProductController@export_product_view');
-
-            Route::post('store','Admin\ProductController@store')->name('admin.product.store');
-            Route::get('edit/{id}','Admin\ProductController@edit')->name('admin.product.edit');
-            Route::post('update/{id}','Admin\ProductController@update')->name('admin.product.update');
-            Route::any('delete/{id}','Admin\ProductController@destroy')->name('admin.product.destroy');
         });
         Route::group(['prefix' => 'category'], function () {
             Route::get('/','Admin\CategoryController@index')->name('admin.category');

@@ -50,7 +50,10 @@
                                 <a href="/admin/product" class="menu-link">Xem sản phẩm</a>
                             </li>
                             <li class="menu-item {{ Request::is('admin/product/create') ? 'has-active' : '' }}">
-                                <a href="/admin/product/create" class="menu-link">Thêm sản phẩm</a>
+                                <a href="/admin/product/create" class="menu-link">Thêm sản phẩm thường</a>
+                            </li>
+                            <li class="menu-item {{ Request::is('admin/product/configurable/create') ? 'has-active' : '' }}">
+                                <a href="/admin/product/configurable/create" class="menu-link">Thêm sản phẩm combo</a>
                             </li>
                             <li class="menu-item {{ Request::is('admin/product/import_export') ? 'has-active' : '' }}">
                                 <a href="/admin/product/import_export" class="menu-link">Nhập/Xuất</a>

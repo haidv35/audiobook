@@ -18,6 +18,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use App\Imports\FileImport;
 use App\Exports\FileExport;
+use App\Http\Requests\ProductConfigurableRequest;
+use App\ProductConfigurable;
+use App\ListProductConfigurable;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -93,6 +96,11 @@ class ProductController extends Controller
         return view('admin.product.create')->with('categories',$categories);
     }
 
+    public function createConfigurable(){
+        $products = Product::all();
+        return view('admin.product.create_configurable_product')->with(['products'=>$products]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -128,6 +136,27 @@ class ProductController extends Controller
             ]);
         }
 
+    }
+    public function storeConfigurable(ProductConfigurableRequest $request){
+        if($request->validated())
+        {
+            $request->merge(['user_id'=>Auth::id()]);
+            $product = ProductConfigurable::create($request->except(['product_list','_token']));
+            foreach(json_decode($request->product_list) as $value){
+                ListProductConfigurable::create(['product_configurable_id'=>$product->id,'product_id'=>$value]);
+            }
+            return response()->json([
+                'message'   => 'Thêm mới thành công',
+                'status'    => 200
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'message'   => "Đã xảy ra lỗi. Vui lòng thử lại.",
+                'status'    => 404
+            ]);
+        }
     }
 
     /**
