@@ -22,6 +22,9 @@
                 </button>
                 <!-- /toggle menu -->
             </div>
+            <div class="w-75 text-center d-md-none d-lg-none d-xl-none">
+                <a href="/"><img src="{{ $logo }}" class="" style="width:3rem;" alt=""></a>
+            </div>
             <!-- /.top-bar-item -->
             <!-- .top-bar-item -->
 

@@ -1,6 +1,6 @@
 @extends('home.layouts.app')
 @section('app-main')
-<div class="row" style="margin:5rem 0 5rem 0;">
+<div class="row" style="margin:2rem 0 5rem 0;">
     <div class="card">
         <div class="row no-gutters">
             <aside class="col-lg-6">

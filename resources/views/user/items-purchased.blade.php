@@ -61,7 +61,7 @@
                                 }
                             @endphp
                             @if ($product_link != '')
-                                <li class="list-group-item">
+                                <li class="list-group-item @if($counter == 1) active @endif">
                                     <a href="https://www.googleapis.com/drive/v3/files/{{ $product_link }}?alt=media&key=AIzaSyAgaMIobc0MLNnfZAHIpY8OgNqsnGExMZ8">{{$item->product->title . " - part " . $counter}}</a>
                                 </li>
                             @endif
@@ -129,6 +129,7 @@
     var tracks;
     var current;
 
+
     init();
     function init() {
         current = 0;
@@ -138,8 +139,11 @@
         len = tracks.length - 1;
         // audio[0].volume = 1;
         // audio[0].play();
+
+
         playlist.find('a').click(function (e) {
             e.preventDefault();
+            playlist.find('li').addClass('active');
             link = $(this);
             current = link.parent().index();
             run(link, audio[0]);

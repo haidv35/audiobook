@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    @include('home.layouts.header',['title'=>'Tri Thức Nhân Loại'])
+    @include('home.layouts.header',['title'=>'Kiến Thức Nhân Loại'])
 </head>
 <body>
     @includeIf('home.layouts.header-section',['logo'=>$logo])

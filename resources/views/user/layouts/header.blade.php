@@ -32,19 +32,19 @@
       }
     </script><!-- End SEO tag -->
     <!-- FAVICONS -->
-    <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('/looper/assets/apple-touch-icon.png') }}">
-    <link rel="shortcut icon" href="{{ asset('/looper/assets/favicon.ico') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="/looper/assets/apple-touch-icon.png">
+    <link rel="shortcut icon" href="/looper/assets/favicon.ico">
     <meta name="theme-color" content="#3063A0"><!-- End FAVICONS -->
     <!-- GOOGLE FONT -->
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet"><!-- End GOOGLE FONT -->
     <!-- BEGIN PLUGINS STYLES -->
-    <link rel="stylesheet" href="{{ asset('/looper/assets/vendor/open-iconic/css/open-iconic-bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('/looper/assets/vendor/fontawesome/css/all.css') }}">
-    <link rel="stylesheet" href="{{ asset('/looper/assets/vendor/flatpickr/flatpickr.min.css') }}"><!-- END PLUGINS STYLES -->
+    <link rel="stylesheet" href="/looper/assets/vendor/open-iconic/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="/looper/assets/vendor/fontawesome/css/all.css">
+    <link rel="stylesheet" href="/looper/assets/vendor/flatpickr/flatpickr.min.css"><!-- END PLUGINS STYLES -->
     <!-- BEGIN THEME STYLES -->
-    <link rel="stylesheet" href="{{ asset('/looper/assets/stylesheets/theme.min.css') }}" data-skin="default">
-    <link rel="stylesheet" href="{{ asset('/looper/assets/stylesheets/theme-dark.min.css') }}" data-skin="dark">
-    <link rel="stylesheet" href="{{ asset('/looper/assets/stylesheets/custom.css') }}"><!-- Disable unused skin immediately -->
+    <link rel="stylesheet" href="/looper/assets/stylesheets/theme.min.css" data-skin="default">
+    <link rel="stylesheet" href="/looper/assets/stylesheets/theme-dark.min.css" data-skin="dark">
+    <link rel="stylesheet" href="/looper/assets/stylesheets/custom.css"><!-- Disable unused skin immediately -->
     @yield('custom-header')
     <script>
       var skin = localStorage.getItem('skin') || 'default';

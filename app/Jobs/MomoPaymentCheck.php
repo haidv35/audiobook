@@ -71,7 +71,8 @@ class MomoPaymentCheck implements ShouldQueue
                 }
                 break;
             }
-            echo $getPrice . " ------------------ " . $getText;
+
+            // echo $getPrice . " ------------------ " . $getText;
 
             //Check code and price for momo payment
             $orders = Order::where(['status'=>1])->orWhere(['status'=>2])->get();
@@ -90,6 +91,9 @@ class MomoPaymentCheck implements ShouldQueue
                         Order::where('id',$order->id)->update(['status'=>2,'paid'=>$order->paid + $getPrice]);
                         $v1->moveToFolder('MomoReceive');
                     }
+                }
+                else{
+                    $v1->moveToFolder('MomoUnknown');
                 }
             }
             // $v1->setFlag(['Seen']);

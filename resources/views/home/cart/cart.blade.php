@@ -27,10 +27,27 @@
                     </table>
 
                     <div class="card-body border-top">
-                        <a href="/checkout/{{ Auth::id()}}/{{ Auth::user()->username }}" class="btn btn-primary float-md-right"> Tiếp tục <i
-                                class="fa fa-chevron-right"></i> </a>
-                        <button onclick="resetCart()" class="btn btn-danger float-md-right mr-2"> Xoá tất cả </button>
-                        <a href="/" class="btn btn-light"> <i class="fa fa-chevron-left"></i> Tiếp tục mua sắm </a>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-lg-6 col-sm-12 mt-2">
+                                        <a href="/" class="btn btn-light w-100"> <i class="fa fa-chevron-left"></i> Tiếp tục mua sắm </a>
+
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12 mt-2">
+                                        <div class="row justify-content-center">
+                                            <div class="col-6">
+                                                <button onclick="resetCart()" class="btn btn-danger w-100"> Xoá tất cả </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <a href="/checkout/{{ Auth::id()}}/{{ Auth::user()->username }}" class="btn btn-primary w-100"> Tiếp tục <i
+                                                        class="fa fa-chevron-right"></i> </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div> <!-- card.// -->
 
