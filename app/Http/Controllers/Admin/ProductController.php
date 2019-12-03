@@ -16,7 +16,6 @@ use App\Http\Requests\CategoryIERequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
-use App\Services\ProductService;
 use App\Imports\FileImport;
 use App\Exports\FileExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -24,10 +23,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ProductController extends Controller
 {
-    private $product_service;
-    public function __construct(ProductService $service)
+    public function __construct()
     {
-        $this->product_service = $service;
+
     }
     /**
      * Display a listing of the resource.
@@ -180,7 +178,7 @@ class ProductController extends Controller
             // }
             $request->merge(['image'=>$image_link,'user_id'=>Auth::id()]);
             $product = Product::where('id',$id)->update($request->except(['product_links_id','product_links','image_link','_token','description']));
-            /* Update Or Create ??? */Description::where('product_id',$id)->update(['content'=>$get_description]);
+            Description::where('product_id',$id)->update(['content'=>$get_description]);
             for($i=0;$i<count($product_links_id);$i++){
                 ProductLink::where(['id'=>$product_links_id[$i],'product_id'=>$id])->update(['content'=>$product_links[$i]]);
             }

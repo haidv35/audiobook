@@ -27,7 +27,7 @@
                         </aside> <!-- col.// -->
                         <div class="col-md-6">
                             <div class="info-main">
-                                <a href="/product-details/{{$product->id}}" class="h5 title"> {{ $product->title }}</a>
+                                <a href="{{ route('product-details',['id'=>$product->id,'path'=>$product->path])}}" class="h5 title"> {{ $product->title }}</a>
                                 <div id="short_description-demo">
                                     <p>{{ $product->short_description }}</p>
                                 </div>

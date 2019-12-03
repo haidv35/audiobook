@@ -17,8 +17,8 @@ class SettingController extends Controller
             $bank = json_decode($payment_method[0]->info);
             $qrStr = json_decode($payment_method[1]->info)->qr_str;
 
-            $emailAccount = Setting::where('name','momo_email')->get();
-            $emailAccount = json_decode($emailAccount[0]->value);
+            $emailAccount = Setting::where('name','momo_email')->first();
+            $emailAccount = json_decode($emailAccount->value);
 
             $gmail = $emailAccount->email;
             $password = $emailAccount->password;
@@ -116,11 +116,11 @@ class SettingController extends Controller
         }
     }
     public function getLogo(){
-        $logo = Setting::where('name','logo')->get();
-        if(0 != count($logo)){
-            return view('admin.settings.logo')->with('logo',json_decode($logo[0]->value));
+        $logo = Setting::where('name','logo')->first();
+        if($logo == null){
+            return view('admin.settings.logo')->with('logo','');
         }
-        return view('admin.settings.logo')->with('logo','');
+        return view('admin.settings.logo')->with('logo',json_decode($logo->value));
     }
     public function setLogo(Request $request){
         $validator = Validator::make($request->except('_token'),[

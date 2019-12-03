@@ -138,7 +138,6 @@ class UserController extends Controller
             foreach($list_items_purchased as $item){
                 if(strval($item->id) === $product_id){
                     $product_links = $item->product_links;
-                    // $this->convertToVnString($item);
                     return view('user.items-purchased')->with(['product_info'=>$item,'product_links'=>$product_links,'recommendProduct'=>$recommendProduct]);
                 }
             }

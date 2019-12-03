@@ -12,8 +12,8 @@ class PageController extends Controller
 {
     //Begin Slider
     public function sliderIndex(){
-        $slider = Setting::where('name','slider')->get();
-        $page = (!empty(json_decode($slider,true))) ? json_decode($slider[0]->value,true) : null;
+        $slider = Setting::where('name','slider')->first();
+        $page = (!empty(json_decode($slider,true))) ? json_decode($slider->value,true) : null;
         return view('admin.settings.pages.slider')->with('slider',$page);
     }
     public function sliderStore(Request $request){
@@ -25,18 +25,17 @@ class PageController extends Controller
         ]);
 
         if(!$validator->fails()){
-            $slider = Setting::where('name','slider')->get();
+            $slider = Setting::where('name','slider')->first();
             if(!empty(json_decode($slider,true))){
-                $slider = $slider[0]->value;
-                $slider = json_decode($slider);
+                $slider = json_decode($slider->value);
                 array_push($slider,$request->image_link);
                 Setting::where(['name'=>'slider'])->update(['name'=>'slider','value'=>json_encode($slider)]);
                 return back();
             }
             else{
-                $slide_collect = array();
-                array_push($slide_collect,$request->image_link);
-                Setting::create(['name'=>'slider','value'=>json_encode($slide_collect)]);
+                $slide_array = array();
+                array_push($slide_array,$request->image_link);
+                Setting::create(['name'=>'slider','value'=>json_encode($slide_array)]);
                 return back();
             }
         }
@@ -46,7 +45,7 @@ class PageController extends Controller
     }
     public function sliderDestroy($id = null){
         if($id != null){
-            $slider = Setting::where('name','slider')->get('value')[0]['value'];
+            $slider = Setting::where('name','slider')->first()->value;
             $slider = json_decode($slider,true);
             array_splice($slider,$id-1,1);
             $slider = json_encode($slider);
@@ -57,8 +56,8 @@ class PageController extends Controller
     //End Slider
 
     public function pageIndex($page_name){
-        $page = Setting::where('name',$page_name)->get();
-        $page = (!empty(json_decode($page,true))) ? json_decode($page[0]->value,true) : null;
+        $page = Setting::where('name',$page_name)->first();
+        $page = (!empty(json_decode($page,true))) ? json_decode($page->value,true) : null;
         return view('admin.settings.pages.'.$page_name)->with(['page'=>$page,'page_name'=>$page_name]);
     }
     public function pageStore(Request $request,$page_name = null){
@@ -68,10 +67,10 @@ class PageController extends Controller
             'value.required' => 'Bạn chưa nhập nội dung!',
         ]);
         if(!$validator->fails()){
-            $page = Setting::where('name',$page_name)->get();
+            $pageCounter = Setting::where('name',$page_name)->count();
             $value = json_encode($request->value);
             $request->merge(['name'=>$page_name,'value'=>$value]);
-            if(0 != count($page)){
+            if(0 != $pageCounter){
                 Setting::where('name',$page_name)->update($request->except('_token'));
                 return redirect()->back()->with('success','Cập nhật thành công');
             }
@@ -89,7 +88,6 @@ class PageController extends Controller
     public function aboutStore(Request $request){
         return $this->pageStore($request,'about');
     }
-
     public function tutorialIndex(){
         return $this->pageIndex('tutorial');
     }

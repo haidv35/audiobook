@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
 @endsection
 @section('app-main')
-    @includeWhen(isset($searchProduct) ? true : false,'home.product.search-product',$searchProduct)
+
     @if (empty($searchProduct))
         @includeWhen(!empty($slider) ? true : false ,'home.layouts.intro',$slider)
         @includeWhen(0 != count($demoLinks) ? true : false,'home.product.try-listening',$demoLinks)

@@ -23,6 +23,7 @@ class HomeController extends Controller
     {
         parent::__construct();
         $this->searchProduct();
+        $this->getUserOrderedProducts();
     }
     //Initial function
     /****************************************************/
@@ -63,7 +64,6 @@ class HomeController extends Controller
     //Homepage
     public function index()
     {
-        $this->getUserOrderedProducts();
         $demoLinks = Product::where('demo_link', '!=', '0')->orWhere('demo_link', '!=', NULL)->limit(2)->inRandomOrder()->get();
         $newProduct = $this->getProductsByType('new_product');
         $hotProduct = $this->getProductsByType('hot_product');
@@ -71,20 +71,23 @@ class HomeController extends Controller
         $this->convertToVnString($newProduct);
         $this->convertToVnString($hotProduct);
         $this->convertToVnString($recommendProduct);
-        return view('home.home')->with(['demoLinks' => $demoLinks, 'searchProduct' => $this->searchProduct, 'newProduct' => $newProduct, 'hotProduct' => $hotProduct, 'recommendProduct' => $recommendProduct, 'orderedProducts' => $this->orderedProducts]);
+
+        return view('home.home')->with(['demoLinks' => $demoLinks, 'newProduct' => $newProduct, 'hotProduct' => $hotProduct, 'recommendProduct' => $recommendProduct, 'orderedProducts' => $this->orderedProducts]);
     }
 
     public function search()
     {
-        $this->getUserOrderedProducts();
+        foreach ($this->searchProduct as $value) {
+            $value->path = $this->vnToString($value->title);
+        }
         return view('home.search')->with(['orderedProducts' => $this->orderedProducts, 'searchProduct' => $this->searchProduct]);
     }
 
     //Page
     public function page($page_name)
     {
-        $page = Setting::where('name', $page_name)->get('value');
-        return view('home.' . $page_name)->with(['page' => (!empty(json_decode($page, true))) ? json_decode($page[0]->value) : null]);
+        $page = Setting::where('name', $page_name)->first();
+        return view('home.' . $page_name)->with(['page' => (!empty(json_decode($page, true))) ? json_decode($page->value) : null]);
     }
     public function about()
     {
@@ -102,7 +105,6 @@ class HomeController extends Controller
     //Product
     public function displayAllProduct()
     {
-        $this->getUserOrderedProducts();
         if (request()->get('sort') != null && Schema::hasColumn('products', request()->get('sort'))) {
             $getAllProduct = Product::orderBy(request()->get('sort'), 'desc')->paginate(5);
         } else {
@@ -117,7 +119,9 @@ class HomeController extends Controller
 
     public function productDetail($id = null,$path = null)
     {
-        $this->getUserOrderedProducts();
+        if($id == null || $path == null){
+            return back();
+        }
         $getProductById = Product::with('category')->find($id);
         $recommendProduct = Product::limit(4)->inRandomOrder()->get();
         $this->convertToVnString($recommendProduct);
@@ -130,13 +134,13 @@ class HomeController extends Controller
     //Cart
     public function displayCart()
     {
-        return view('home.cart.cart')->with([]);
+        return view('home.cart.cart');
     }
 
     public function getCheckout($userId = null, $user = null)
     {
         if (Auth::user()->id === intval($userId) && Auth::user()->username === $user) {
-            return view('home.cart.checkout')->with([]);
+            return view('home.cart.checkout');
         }
         return redirect()->route('homepage');
     }
@@ -194,7 +198,8 @@ class HomeController extends Controller
             $orders = $orders[0];
             if ($orders->amount == $orders->paid && $orders->status == 'paid') {
                 return redirect()->route('user.orders');
-            } else {
+            }
+            else {
                 $paymentMethods = PaymentMethod::all();
                 $bank = json_decode($paymentMethods[0]->info);
                 $momo = json_decode($paymentMethods[1]->info);
