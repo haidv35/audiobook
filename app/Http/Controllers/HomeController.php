@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
 use App\Product;
@@ -27,8 +26,8 @@ class HomeController extends Controller
     }
     //Initial function
     /****************************************************/
-    
-    public function getUserOrderedProducts()
+
+    function getUserOrderedProducts()
     {
         $this->orderedProducts = collect();
         if (Auth::check()) {
@@ -57,11 +56,9 @@ class HomeController extends Controller
             $this->searchProduct = NULL;
         }
     }
-    
-    
 
 
-    /*****************************************************/
+/*****************************************************/
 
     //Homepage
     public function index()

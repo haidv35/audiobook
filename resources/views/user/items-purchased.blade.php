@@ -1,6 +1,24 @@
 @extends('user.layouts.app')
 @section('custom-header')
     <link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
+    <style>
+        .list-group{
+            height: 7rem;
+            overflow:scroll;
+            -webkit-overflow-scrolling: touch;
+        }
+        .list-group-item{
+            padding: 1rem 0rem 1rem 3.5rem!important;
+            border-bottom: 1px dashed black!important;
+            margin-bottom: 1px!important;
+
+        }
+        @media screen and (max-width: 600px) {
+            .list-group-item{
+                padding: 1rem 0rem 3rem 2rem!important;
+            }
+        }
+    </style>
 @endsection
 @section('app-main')
 <div class="container" style="margin-top:5rem;">
@@ -11,7 +29,7 @@
                     <a href="#"><img src="{{ $product_info->image }}" alt="" class="img-fluid" style="height:15rem;"></a>
                 </div>
                 <div class="col-lg-9">
-                    <h4 class="text-center">{{ $product_info->title }} gồm: {{ count($product_links) }} phần</h4>
+                    <h4 class="text-center my-2">{{ $product_info->title }} gồm: {{ count($product_links) }} phần</h4>
                     @php
                         $product_link = explode('/',parse_url($product_links[0]->content)['path']);
                         if(isset($product_link) && isset($product_link[3])){
@@ -28,7 +46,7 @@
                                 type="audio/mp3" />
                         </audio>
                     @endif
-                    <ul id="playlist" class="list-group border-top" style="max-height:122px;overflow:scroll">
+                    <ul id="playlist" class="list-group border-top">
                         @php
                             $counter = 1;
                         @endphp
@@ -43,7 +61,7 @@
                                 }
                             @endphp
                             @if ($product_link != '')
-                                <li class="active list-group-item">
+                                <li class="list-group-item">
                                     <a href="https://www.googleapis.com/drive/v3/files/{{ $product_link }}?alt=media&key=AIzaSyAgaMIobc0MLNnfZAHIpY8OgNqsnGExMZ8">{{$item->product->title . " - part " . $counter}}</a>
                                 </li>
                             @endif

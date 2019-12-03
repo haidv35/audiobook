@@ -25,11 +25,59 @@ $("#continue").on('click',function(){
                     $.each(d.message,function(k,v){
                         showStackTopRight('error','Error!',v);
                     });
-                }
-            }
-        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      }
+
+         }
+
+
+  });
     }
     else{
         showStackTopRight('error',"Error","Mật khẩu xác nhận không đúng");
-    }
+
+ }
 });

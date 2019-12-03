@@ -56,7 +56,7 @@ class SocialController extends Controller
             if($request->password_confirmation == $request->password){
                 $request->merge([
                     'firstname'=>$sessionInfo->firstname,
-                    'lastname'=>$sessionInfo->lastname,
+            'lastname'=>$sessionInfo->lastname,
                     'email'=>$sessionInfo->email,
                     'fb_id'=>$sessionInfo->id,
                     'password'=>bcrypt($request->password),
@@ -71,21 +71,4 @@ class SocialController extends Controller
             return $this->display_response(404,$validator->errors());
         }
     }
-    // function createUser($getInfo, $provider)
-    // {
-    //     $user = User::where('fb_id', $getInfo->id)->first();
-    //     if($getInfo != null){
-    //         $fullname = explode(' ',$getInfo->name);
-    //     }
-    //     if (!$user) {
-    //         $user = User::create([
-    //             'firstname' => $fullname[0],
-    //             'lastname'  => $fullname[1],
-    //             'email'    => $getInfo->email,
-    //             'provider' => $provider,
-    //             'provider_id' => $getInfo->id
-    //         ]);
-    //     }
-    //     return $user;
-    // }
 }

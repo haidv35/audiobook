@@ -1,6 +1,6 @@
 <?php
 namespace App\Services;
-class ProductService{
+class UploadService{
     public function handleUploadedImage($image_upload){
         if (!is_null($image_upload)) {
             $new_name = rand() . md5($image_upload->getClientOriginalName()) . rand() . '.' . $image_upload->getClientOriginalExtension();

@@ -17,15 +17,15 @@ class Controller extends BaseController
     public function __construct()
     {
         $page = Setting::all();
-        foreach($page as $k => $v){
-            if($v->name == 'slider'){
-                $slider = $v->value;
+        foreach($page as $key => $value){
+            if($value->name == 'slider'){
+                $slider = $value->value;
             }
-            else if($v->name == 'footer'){
-                $footer = $v->value;
+            else if($value->name == 'footer'){
+                $footer = $value->value;
             }
-            else if($v->name == 'logo'){
-                $logo = $v->value;
+            else if($value->name == 'logo'){
+                $logo = $value->value;
             }
         }
 

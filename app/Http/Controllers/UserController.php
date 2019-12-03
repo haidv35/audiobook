@@ -27,15 +27,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $paid_orders = Order::with('order_details')->where(['user_id'=>Auth::id(),'status'=>'paid'])->get();
-        $orders = Order::where(['user_id'=>Auth::id()])->get();
+        $paid_orders = Order::with('order_details')->where([['user_id',Auth::id()],['status','<>','canceled']])->get();
         $paid_order_count = Order::where('user_id',Auth::id())->count();
         $paid_product_count = 0; $paid = 0; $total = 0; $balance = 0;
         foreach($paid_orders as $key => $value){
             $paid_product_count += $value->order_details->count();
             $paid += $value->paid;
         }
-        foreach($orders as $key => $value){
+        foreach($paid_orders as $key => $value){
             $total += $value->amount;
         }
         $balance = $total - $paid;
@@ -79,7 +78,6 @@ class UserController extends Controller
                     $request->merge(['fb_id' => '0']);
                 }
                 $request->merge(['password'=>bcrypt($request->password)]);
-                // dd($request->all());
                 User::where('id',Auth::id())->update($request->except(['_token','username','old_password']));
             }
             return back()->with('success','Cập nhật thành công!');

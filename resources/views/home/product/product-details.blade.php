@@ -66,7 +66,7 @@
                             </div>
                         </div>
                     </div> --}}
-                    @php
+
                         $check_ordered = 0;
                     @endphp
                     @if (0 != count($orderedProducts))
