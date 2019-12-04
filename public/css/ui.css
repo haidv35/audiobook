@@ -1030,8 +1030,8 @@ a[class*='card'] {
 .gallery-wrap .thumbs-wrap {
   text-align: center; }
   .gallery-wrap .thumbs-wrap .item-thumb {
-    width: 60px;
-    height: 60px;
+    width: 10rem; /*60px*/
+    height: 10rem;
     border: 1px solid #ddd;
     border-radius: 6px;
     margin: 3px;
@@ -1043,13 +1043,15 @@ a[class*='card'] {
     -o-object-fit: cover;
        object-fit: cover;
     border-radius: 4px;
-    cursor: -webkit-zoom-in;
-    cursor: zoom-in; }
-    .gallery-wrap .thumbs-wrap img:hover {
+    /* cursor: -webkit-zoom-in; */
+    /* cursor: zoom-in;  */
+    }
+    /* .gallery-wrap .thumbs-wrap img:hover {
       -webkit-filter: brightness(1.1);
               filter: brightness(1.1);
       cursor: -webkit-zoom-in;
-      cursor: zoom-in; }
+      cursor: zoom-in;
+    } */
 
 .item-option-select {
   margin-bottom: 1rem;

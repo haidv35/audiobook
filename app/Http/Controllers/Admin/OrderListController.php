@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\Product;
 use App\OrderDetail;
 use App\PaymentMethod;
+use App\ProductConfigurable;
 use App\User;
 
 use Carbon\Carbon;
@@ -35,7 +37,6 @@ class OrderListController extends Controller
             $order->username = User::find($order->user_id)->username;
             $order->fullname = User::find($order->user_id)->firstname . " " . User::find($order->user_id)->lastname;
             $order->email = User::find($order->user_id)->email;
-
             $this->parseDateTime($order->ordered_at,$order->paid_at,$order->canceled_at);
             $order->ordered_at = $this->ordered_at;
             $order->paid_at = $this->paid_at;
@@ -51,10 +52,6 @@ class OrderListController extends Controller
         }
         $data['data'] = $orders;
         return $data;
-
-        // return Order::find(1)->payment_method;
-        // $data['data'] = Order::all();
-        // return json_encode($data);
     }
 
     public function index($order_id = null)
@@ -64,6 +61,21 @@ class OrderListController extends Controller
         }
         else{
             $order_detail = OrderDetail::with('product')->where('order_id',$order_id)->get();
+            foreach($order_detail as $key => $item){
+                // $configurableProduct = Product::where([['id',$item->product_id],['type','simple']])->first();
+                // if(isset($configurableProduct)){
+                //     unset($order_detail[$key]);
+                // }
+                $configurableProduct = ProductConfigurable::where('product_simple_id',$item->product_id)->get();
+                foreach($configurableProduct as $simpleProduct){
+                    if($item->product_id == $simpleProduct->product_simple_id){
+                        unset($order_detail[$key]);
+                    }
+                }
+            }
+            $this->convertToVnString($order_detail);
+
+
             $order = Order::find($order_id);
             $payment_method = PaymentMethod::all();
             $this->parseDateTime($order->ordered_at,$order->paid_at,$order->canceled_at);
@@ -73,6 +85,7 @@ class OrderListController extends Controller
             $order->ordered_at = $this->ordered_at;
             $order->paid_at = $this->paid_at;
             $order->canceled_at = $this->canceled_at;
+
             return view('admin.orders.order-details')->with(['order'=>$order,'order_detail'=>$order_detail,'payment_method'=>$payment_method]);
         }
     }

@@ -47,10 +47,13 @@
                                 class="menu-text">Sản Phẩm</span> </a> <!-- child menu -->
                         <ul class="menu">
                             <li class="menu-item {{ Request::is('admin/product') ? 'has-active' : '' }}">
-                                <a href="/admin/product" class="menu-link">Xem sản phẩm</a>
+                                <a href="/admin/product" class="menu-link">Xem sản phẩm thường</a>
                             </li>
                             <li class="menu-item {{ Request::is('admin/product/create') ? 'has-active' : '' }}">
                                 <a href="/admin/product/create" class="menu-link">Thêm sản phẩm thường</a>
+                            </li>
+                            <li class="menu-item {{ Request::is('admin/product/configurable') ? 'has-active' : '' }}">
+                                <a href="/admin/product/configurable" class="menu-link">Xem sản phẩm combo</a>
                             </li>
                             <li class="menu-item {{ Request::is('admin/product/configurable/create') ? 'has-active' : '' }}">
                                 <a href="/admin/product/configurable/create" class="menu-link">Thêm sản phẩm combo</a>

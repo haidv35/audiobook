@@ -76,6 +76,7 @@ class ProductImport implements ToCollection,WithHeadingRow
         foreach ($collection as $row)
         {
             $product = Product::updateOrCreate([
+                'type' => 'simple',
                 'user_id' => Auth::user()->id,
                 'category_id' => $row['category_id'],
                 'title' => $row['title'],

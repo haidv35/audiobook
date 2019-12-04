@@ -29,7 +29,7 @@ class MomoPaymentController extends Controller
 
     public function index()
     {
-        // MomoPaymentCheck::dispatchNow();
+        MomoPaymentCheck::dispatchNow();
     }
     public function spamToInbox(){
         try{

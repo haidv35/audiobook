@@ -28,7 +28,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('momo:sti')->everyMinute();
         $schedule->command('momo:ap')->everyMinute();
-        $schedule->command('queue:work')->everyMinute();
+        $schedule->command('queue:work --once')->everyMinute();
+        // $schedule->command('queue:work --stop-when-empty')->everyMinute();
     }
 
     /**

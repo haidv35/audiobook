@@ -8,12 +8,12 @@
             -webkit-overflow-scrolling: touch;
         }
         .custom-list-group-item{
-            padding: 1rem 0rem 1rem 3.5rem!important;
+            padding: 1rem 0rem 1rem 2rem!important;
             border-bottom: 1px dashed black!important;
             margin-bottom: 1px!important;
         }
         .custom-list-group-item-action:hover{
-            background:#1ba244;
+            background: #919292;
         }
         @media screen and (max-width: 600px) {
             .custom-list-group-item{
@@ -24,14 +24,47 @@
 @endsection
 @section('app-main')
 <div class="container" style="margin-top:5rem;">
+    @if(isset($getConfigurableProduct))
+        <div class="row">
+            <div class="col-lg-12 mb-2">
+                <h3 class="text-center">Danh mục các sách</h3>
+            </div>
+        </div>
+        <div class="row">
+            @foreach ($getConfigurableProduct as $item)
+                <div class="col-xl-3 col-lg-4 col-sm-6">
+                    <div class="card card-figure">
+                        <figure class="figure" style="height:23em;">
+                            <div class="figure-img d-flex align-self-center" style="height:23em;">
+                                <img class="img-fluid" src="{{ $item->simple_products->image }}"
+                                    alt=""> <a href="/user/purchased/{{ $item->simple_products->id }}" class="img-link"
+                                    data-size="600x450"><span class="tile tile-circle bg-danger"><span
+                                            class="oi oi-eye"></span></span> <span class="img-caption d-none">{{ $item->simple_products->title }}</span></a>
+                                <div class="figure-action">
+                                    <a href="#" class="btn btn-block btn-sm btn-primary">Xem chi tiết</a>
+                                </div>
+                            </div>
+                            <figcaption class="figure-caption">
+                                <ul class="list-inline text-muted mb-0">
+                                    <li class="list-inline-item">
+                                        <span class="oi oi-paperclip"></span> {{ $item->simple_products->title }}
+                                    </li>
+                                </ul>
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    @else
     <div class="row">
-        <div class="col-8">
+        <div class="col-lg-8">
             <div class="row">
                 <div class="col-lg-3 d-flex justify-content-center">
                     <a href="#"><img src="{{ $product_info->image }}" alt="" class="img-fluid" style="height:15rem;"></a>
                 </div>
                 <div class="col-lg-9">
-                    <h4 class="text-center my-2">{{ $product_info->title }} gồm: {{ count($product_links) }} phần</h4>
+                    <h4 class="text-left my-2">{{ $product_info->title }} gồm: {{ count($product_links) }} phần</h4>
                     @php
                         $product_link = explode('/',parse_url($product_links[0]->content)['path']);
                         if(isset($product_link) && isset($product_link[3])){
@@ -79,16 +112,16 @@
                 <div class="fb-comments" data-href="{{ route('product-details',['id'=>$product_info->id,'path'=>$product_info->path])}}" data-order-by="time" data-width="" data-numposts="10" data-mobile=""></div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-lg-4">
             <div class="row justify-content-center bg-dark text-light">
                 <h4>Có thể bạn quan tâm</h4>
             </div>
             <div class="row">
                 @foreach ($recommendProduct as $item)
-                <div class="col-12 mt-2">
+                <div class="col-12">
                     <div href="#" class="list-group-item list-group-item-action custom-list-group-item-action" target="_blank">
                         <div class="row">
-                            <div class="col-6 ">
+                            <div class="col-6">
                                 <div class="list-group-item-figure">
                                     <img src="{{ $item->image}}" alt="" style="height:8rem;width:6em;" class="img-fluid">
                                 </div>
@@ -108,6 +141,7 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 
 @endsection

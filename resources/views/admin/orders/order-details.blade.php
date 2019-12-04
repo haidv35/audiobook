@@ -7,7 +7,7 @@
                 <h4 class="card-title"> Danh sách sản phẩm </h4>
                 @foreach ($order_detail as $item)
                 <div class="list-group list-group-flush list-group-divider">
-                    <a href="/product-details/{{ $item->product_id }}" class="list-group-item list-group-item-action" target="_blank">
+                    <div class="list-group-item list-group-item-action" target="_blank">
                         <div class="list-group-item-figure">
                             <div class="">
                                 <img src="{{ $item->product->image }}" alt="" style="width:5rem;">
@@ -18,7 +18,7 @@
                             <h5 class="list-group-item-subtitle price"> {{ $item->price }} </h5>
                             <p class="list-group-item-text text-truncate"> {{ $item->category }} </p>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 @endforeach
             </div>

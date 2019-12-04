@@ -78,7 +78,7 @@ if (cart == null) {
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.log(xhr);
+                    // console.log(xhr);
                 }
             });
         }

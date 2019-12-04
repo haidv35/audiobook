@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
 use App\Product;
+use App\ProductConfigurable;
 use App\Order;
 use App\OrderDetail;
 use App\PaymentMethod;
@@ -23,31 +24,29 @@ class HomeController extends Controller
     {
         parent::__construct();
         $this->searchProduct();
-        $this->getUserOrderedProducts();
+
     }
     //Initial function
     /****************************************************/
 
-    function getUserOrderedProducts()
+    function getUserOrderedProducts($user_id)
     {
         $this->orderedProducts = collect();
-        if (Auth::check()) {
-            $this->orders = Order::where(['user_id' => Auth::id(), 'status' => 'paid'])->orWhere('status', 'unpaid')->orWhere('status', 'processing')->get();
-            foreach ($this->orders as $orderValue) {
-                //add status to product
-                $orderDetail = OrderDetail::where(['order_id' => $orderValue->id])->get();
-                $orderDetail = json_decode($orderDetail);
-                foreach ($orderDetail as $orderDetailValue) {
-                    $orderDetailValue->status = $orderValue->status;
-                    $orderDetailValue->order_code = $orderValue->order_code;
-                }
-                $this->orderedProducts->add($orderDetail);
-            };
-        }
+        $this->orders = Order::where([['user_id',$user_id],['status','!=', 'canceled']])->get();
+        foreach ($this->orders as $orderValue) {
+            //add status to product
+            $orderDetail = OrderDetail::where(['order_id' => $orderValue->id])->get();
+            $orderDetail = json_decode($orderDetail);
+            foreach ($orderDetail as $orderDetailValue) {
+                $orderDetailValue->status = $orderValue->status;
+                $orderDetailValue->order_code = $orderValue->order_code;
+            }
+            $this->orderedProducts->add($orderDetail);
+        };
     }
     public function getProductsByType($type)
     {
-        return Product::where($type, 1)->latest()->limit(8)->get();
+        return Product::where([['type','simple'],[$type, 1]])->latest()->limit(8)->get();
     }
     public function searchProduct()
     {
@@ -64,19 +63,29 @@ class HomeController extends Controller
     //Homepage
     public function index()
     {
-        $demoLinks = Product::where('demo_link', '!=', '0')->orWhere('demo_link', '!=', NULL)->limit(2)->inRandomOrder()->get();
+        $this->getUserOrderedProducts(Auth::id());
+        $product_count = Product::where('type','simple')->count();
+        $demoLinks_count = Product::where([['type','simple'],['demo_link', '!=', '0']])->count();
+        if($product_count > 8) $product_count = 8;
+        if($demoLinks_count > 2) $demoLinks_count = 2;
+        $demoLinks = Product::where([['type','simple'],['demo_link', '!=', '0']])->orderBy('id', 'desc')->take(10)->get()->random(2);
         $newProduct = $this->getProductsByType('new_product');
         $hotProduct = $this->getProductsByType('hot_product');
-        $recommendProduct = Product::limit(8)->inRandomOrder()->get();
+        $recommendProduct = Product::where('type','simple')->orderBy('id', 'desc')->take(10)->get()->random($product_count);
+
+        $configurableProduct = Product::where('type','configurable')->get();
+
         $this->convertToVnString($newProduct);
         $this->convertToVnString($hotProduct);
         $this->convertToVnString($recommendProduct);
+        $this->convertToVnString($configurableProduct);
 
-        return view('home.home')->with(['demoLinks' => $demoLinks, 'newProduct' => $newProduct, 'hotProduct' => $hotProduct, 'recommendProduct' => $recommendProduct, 'orderedProducts' => $this->orderedProducts]);
+        return view('home.home')->with(['demoLinks' => $demoLinks, 'newProduct' => $newProduct, 'hotProduct' => $hotProduct, 'recommendProduct' => $recommendProduct, 'orderedProducts' => $this->orderedProducts,'configurableProduct'=>$configurableProduct]);
     }
 
     public function search()
     {
+        $this->getUserOrderedProducts(Auth::id());
         foreach ($this->searchProduct as $value) {
             $value->path = $this->vnToString($value->title);
         }
@@ -105,10 +114,11 @@ class HomeController extends Controller
     //Product
     public function displayAllProduct()
     {
+        $this->getUserOrderedProducts(Auth::id());
         if (request()->get('sort') != null && Schema::hasColumn('products', request()->get('sort'))) {
-            $getAllProduct = Product::orderBy(request()->get('sort'), 'desc')->paginate(5);
+            $getAllProduct = Product::where('type','simple')->orderBy(request()->get('sort'), 'desc')->paginate(5);
         } else {
-            $getAllProduct = Product::paginate(5);
+            $getAllProduct = Product::where('type','simple')->paginate(5);
         }
         foreach ($getAllProduct as $value) {
             $value->path = $this->vnToString($value->title);
@@ -119,6 +129,19 @@ class HomeController extends Controller
 
     public function productDetail($id = null,$path = null)
     {
+        $configurableProduct = Product::where([['id',$id],['type','configurable']])->first();
+        if(isset($configurableProduct)){
+            $configurableProductItem = ProductConfigurable::where('product_configurable_id',$configurableProduct->id)->get();
+            foreach($configurableProductItem as $item){
+                $this->convertToVnString(array($item->simple_products));
+            }
+        }
+        else{
+            $configurableProductItem = null;
+        }
+
+
+        $this->getUserOrderedProducts(Auth::id());
         if($id == null || $path == null){
             return back();
         }
@@ -127,7 +150,13 @@ class HomeController extends Controller
         $this->convertToVnString($recommendProduct);
         if ($id == null || $getProductById == null) return redirect()->route('homepage');
         else {
-            return view('home.product.product-details')->with(['product' => $getProductById, 'orderedProducts' => $this->orderedProducts, 'recommendProduct' => $recommendProduct]);
+            return view('home.product.product-details')->with([
+                'product' => $getProductById,
+                'orderedProducts' => $this->orderedProducts,
+                'recommendProduct' => $recommendProduct,
+                'configurableProduct' => $configurableProduct,
+                'configurableProductItem' => $configurableProductItem
+            ]);
         }
     }
 
@@ -170,17 +199,27 @@ class HomeController extends Controller
             $amount += $cart->price;
         }
         $orders = Order::create(['user_id' => Auth::id(), 'status' => 'unpaid', 'order_code' => '0', 'amount' => $amount, 'paid' => 0, 'ordered_at' => Carbon::now()->setTimezone('Asia/Ho_Chi_Minh'), 'paid_at' => Carbon::minValue(), 'canceled_at' => Carbon::minValue()]);
-        $order_code = 'D' . Carbon::now()->isoformat('DD') . Carbon::now()->isoformat('MM') . Carbon::now()->isoformat('YY') . substr(strtoupper(hash('md5', hash('sha256', $orders->id))), rand(0, 28), 4);
-        Order::where('id', $orders->id)->update(['order_code' => $order_code]);
+        $orderCode = 'D' . Carbon::now()->isoformat('DD') . Carbon::now()->isoformat('MM') . Carbon::now()->isoformat('YY') . substr(strtoupper(hash('md5', hash('sha256', $orders->id))), rand(0, 28), 4);
+        Order::where('id', $orders->id)->update(['order_code' => $orderCode]);
+
         foreach ($carts as $key => $cart) {
+            $productConfigurable = ProductConfigurable::where('product_configurable_id',$cart->id)->get();
+            if(0 != count($productConfigurable)){
+                foreach($productConfigurable as $key => $value){
+                    $getSimpleProduct = Product::where('id',$value->product_simple_id)->first();
+                    $price = ($getSimpleProduct->discount_price != 0) ? $getSimpleProduct->discount_price : $getSimpleProduct->regular_price;
+                    OrderDetail::create(['order_id' => $orders->id, 'product_id' => $getSimpleProduct->id, 'title' => $getSimpleProduct->title, 'category' => json_decode($getSimpleProduct->category)->name, 'regular_price' => $getSimpleProduct->regular_price, 'discount_price' => $getSimpleProduct->discount_price, 'price' => $price, 'promo_code_id' => null]);
+                }
+            }
             OrderDetail::create(['order_id' => $orders->id, 'product_id' => $cart->id, 'title' => $cart->title, 'category' => $cart->category, 'regular_price' => $cart->regular_price, 'discount_price' => $cart->discount_price, 'price' => $cart->price, 'promo_code_id' => null]);
         }
-        PaymentCode::create(['order_id' => $orders->id, 'user_id' => Auth::id(), 'payment_method_id' => 1, 'code' => 'BANK' . $order_code]);
-        PaymentCode::create(['order_id' => $orders->id, 'user_id' => Auth::id(), 'payment_method_id' => 1, 'code' => 'MOMO' . $order_code]);
+
+        PaymentCode::create(['order_id' => $orders->id, 'user_id' => Auth::id(), 'payment_method_id' => 1, 'code' => 'BANK' . $orderCode]);
+        PaymentCode::create(['order_id' => $orders->id, 'user_id' => Auth::id(), 'payment_method_id' => 1, 'code' => 'MOMO' . $orderCode]);
         return response()->json([
             'status' => 200,
             'message' => "Đặt hàng thành công",
-            'redirect_url' => '/pay/' . $order_code
+            'redirect_url' => '/pay/' . $orderCode
         ]);
     }
 
@@ -209,6 +248,13 @@ class HomeController extends Controller
                 $amount = $orders->amount;
                 $paymentCodes = PaymentCode::where(['user_id' => Auth::id(), 'order_id' => $orders->id])->get();
                 $orderDetailItems = Order::find($orders->id)->order_details;
+
+                foreach($orderDetailItems as $key => $orderDetailItem){
+                    $simpleProduct = Product::where([['id',$orderDetailItem->product_id],['type','simple']])->first();
+                    if(isset($simpleProduct)){
+                        unset($orderDetailItems[$key]);
+                    }
+                }
                 return view('home.cart.pay')->with(['orderDetailItems' => $orderDetailItems, 'bank' => $bank, 'momo' => $momo, 'paymentCodes' => $paymentCodes, 'amount' => $amount]);
             }
         }

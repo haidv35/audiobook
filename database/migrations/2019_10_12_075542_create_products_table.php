@@ -15,13 +15,14 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->enum('type',['simple','configurable'])->nullable(false);
             $table->bigInteger('user_id')->unsigned()->nullable(false);
-            $table->bigInteger('category_id')->unsigned()->nullable(false);
-            $table->string('title')->nullable(false);
+            $table->bigInteger('category_id')->unsigned()->nullable();
+            $table->string('title')->nullable(false)->default('0');
             $table->text('short_description')->nullable(false);
-            $table->string('image')->nullable(false);
-            $table->string('demo_link')->nullable(false)->default(0);
-            $table->decimal('regular_price',8)->nullable(false);
+            $table->string('image')->nullable(false)->default('0');
+            $table->string('demo_link')->nullable(false)->default(0)->default('0');
+            $table->decimal('regular_price',8)->nullable(false)->default(0);
             $table->decimal('discount_price',8)->nullable(false)->default(0);
             $table->boolean('new_product')->nullable(false)->default(false);
             $table->boolean('hot_product')->nullable(false)->default(false);
