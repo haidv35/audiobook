@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 @section('custom-header')
+    <link rel="stylesheet" href="/ckeditor/toolbarconfigurator/lib/codemirror/neo.css">
     <link rel="stylesheet" href="/pnotify/dist/PNotifyBrightTheme.css">
     <link rel="stylesheet" href="/css/bootstrap-select.css" />
     <style>
@@ -33,7 +34,7 @@
                                                 </div>
                                                 <div class="form-group mt-2">
                                                     {!! Form::label('short_description', 'Giới thiệu ngắn') !!}
-                                                    {{ Form::text('short_description', $product->short_description, ['class' => 'form-control']) }}
+                                                    {!! Form::textarea('short_description',$product->short_description,['class' => 'form-control','id'=>'short_description']) !!}
                                                 </div>
                                                 <div class="form-group mt-2">
                                                     {!! Form::label('image_link', 'Hình ảnh') !!}
@@ -116,6 +117,7 @@
 @endsection
 
 @section('custom-footer')
+
 <script src="/pnotify/showStackBottomRight.js"></script>
 <script src="/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
@@ -123,4 +125,9 @@
     $('select').selectpicker();
 </script>
 <script src="/js/admin/product/edit_product_configurable.js"></script>
+<script src="/ckeditor/ckeditor.js"></script>
+<script src="/ckeditor/product-configurable.js"></script>
+<script>
+    initSample('short_description');
+</script>
 @endsection

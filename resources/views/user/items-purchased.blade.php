@@ -4,7 +4,7 @@
     <style>
         .custom-list-group{
             height: 7rem;
-            overflow:scroll;
+            overflow:overlay;
             -webkit-overflow-scrolling: touch;
         }
         .custom-list-group-item{
@@ -13,7 +13,7 @@
             margin-bottom: 1px!important;
         }
         .custom-list-group-item-action:hover{
-            background: #919292;
+            background: #eeeeef;
         }
         @media screen and (max-width: 600px) {
             .custom-list-group-item{

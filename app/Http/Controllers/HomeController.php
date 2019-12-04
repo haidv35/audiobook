@@ -75,6 +75,7 @@ class HomeController extends Controller
 
         $configurableProduct = Product::where('type','configurable')->get();
 
+        $this->convertToVnString($demoLinks);
         $this->convertToVnString($newProduct);
         $this->convertToVnString($hotProduct);
         $this->convertToVnString($recommendProduct);
@@ -198,7 +199,7 @@ class HomeController extends Controller
             $amount += $cart->price;
         }
         $orders = Order::create(['user_id' => Auth::id(), 'status' => 'unpaid', 'order_code' => '0', 'amount' => $amount, 'paid' => 0, 'ordered_at' => Carbon::now()->setTimezone('Asia/Ho_Chi_Minh'), 'paid_at' => Carbon::minValue(), 'canceled_at' => Carbon::minValue()]);
-        $orderCode = 'D' . Carbon::now()->isoformat('DD') . Carbon::now()->isoformat('MM') . Carbon::now()->isoformat('YY') . substr(strtoupper(hash('md5', hash('sha256', $orders->id))), rand(0, 28), 4);
+        $orderCode = 'D' . Carbon::now()->isoformat('DD') . Carbon::now()->isoformat('MM') . substr(strtoupper(hash('md5', hash('sha256', $orders->id))), rand(0, 28), 4);
         Order::where('id', $orders->id)->update(['order_code' => $orderCode]);
 
         foreach ($carts as $key => $cart) {
@@ -207,14 +208,14 @@ class HomeController extends Controller
                 foreach($productConfigurable as $key => $value){
                     $getSimpleProduct = Product::where('id',$value->product_simple_id)->first();
                     $price = ($getSimpleProduct->discount_price != 0) ? $getSimpleProduct->discount_price : $getSimpleProduct->regular_price;
-                    OrderDetail::create(['order_id' => $orders->id, 'product_id' => $getSimpleProduct->id, 'title' => $getSimpleProduct->title, 'category' => json_decode($getSimpleProduct->category)->name, 'regular_price' => $getSimpleProduct->regular_price, 'discount_price' => $getSimpleProduct->discount_price, 'price' => $price, 'promo_code_id' => null]);
+                    OrderDetail::updateOrCreate(['order_id' => $orders->id, 'product_id' => $getSimpleProduct->id, 'title' => $getSimpleProduct->title, 'category' => json_decode($getSimpleProduct->category)->name, 'regular_price' => $getSimpleProduct->regular_price, 'discount_price' => $getSimpleProduct->discount_price, 'price' => $price, 'promo_code_id' => null]);
                 }
             }
-            OrderDetail::create(['order_id' => $orders->id, 'product_id' => $cart->id, 'title' => $cart->title, 'category' => $cart->category, 'regular_price' => $cart->regular_price, 'discount_price' => $cart->discount_price, 'price' => $cart->price, 'promo_code_id' => null]);
+            OrderDetail::updateOrCreate(['order_id' => $orders->id, 'product_id' => $cart->id, 'title' => $cart->title, 'category' => $cart->category, 'regular_price' => $cart->regular_price, 'discount_price' => $cart->discount_price, 'price' => $cart->price, 'promo_code_id' => null]);
         }
 
-        PaymentCode::create(['order_id' => $orders->id, 'user_id' => Auth::id(), 'payment_method_id' => 1, 'code' => 'BANK' . $orderCode]);
-        PaymentCode::create(['order_id' => $orders->id, 'user_id' => Auth::id(), 'payment_method_id' => 1, 'code' => 'MOMO' . $orderCode]);
+        PaymentCode::create(['order_id' => $orders->id, 'user_id' => Auth::id(), 'payment_method_id' => 1, 'code' => 'B' . $orderCode]);
+        PaymentCode::create(['order_id' => $orders->id, 'user_id' => Auth::id(), 'payment_method_id' => 1, 'code' => 'M' . $orderCode]);
         return response()->json([
             'status' => 200,
             'message' => "Đặt hàng thành công",

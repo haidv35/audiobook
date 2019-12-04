@@ -1,4 +1,10 @@
 @extends('home.layouts.app')
+@section('meta-tag')
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ $product->title }}" />
+    <meta property="og:description" content="{{ $product->short_description }}" />
+    <meta property="og:image" content="{{ $product->image }}" />
+@endsection
 @section('app-main')
 <div class="row" style="margin:2rem 0 5rem 0;">
     <div class="col-12">
@@ -21,10 +27,9 @@
                         @if($configurableProductItem != null)
                             <h4 class="text-center bg-success text-light">Combo sách gồm có: </h4>
                             <div class="thumbs-wrap">
-                                    @foreach ($configurableProductItem as $item)
-                                        <a href="{{ route('product-details',['id'=>$item->simple_products->id,'path'=>$item->simple_products->path])}}" class="item-thumb" target="_blank"> <img src="{{ $item->simple_products->image }}"></a>
-                                    @endforeach
-
+                                @foreach ($configurableProductItem as $item)
+                                    <a href="{{ route('product-details',['id'=>$item->simple_products->id,'path'=>$item->simple_products->path])}}" class="item-thumb" style="" target="_blank"> <img src="{{ $item->simple_products->image }}"></a>
+                                @endforeach
                             </div>
                         @endif
                     </article>
