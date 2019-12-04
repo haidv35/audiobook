@@ -13,7 +13,7 @@
                             src="{{ $product->image }}"> </a>
                             <figcaption class="info-wrap">
                                 <a href="{{ route('product-details',['id'=>$product->id,'path'=>$product->path])}}" class="title">{{ $product->title }}</a>
-                                {{-- text-truncate --}}
+
                                 <div class="mt-2 row">
                                     <div class="col-6">
                                         <var class="price">{{ $product->discount_price }}</var> <!-- price-wrap.// -->

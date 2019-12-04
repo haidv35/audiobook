@@ -18,14 +18,15 @@
                                 </div>
                             </div>
                         @endif
-                        <h4 class="text-center bg-success text-light">Combo sách gồm có: </h4>
-                        <div class="thumbs-wrap">
-                            @if($configurableProductItem != null)
-                                @foreach ($configurableProductItem as $item)
-                                    <a href="{{ route('product-details',['id'=>$item->simple_products->id,'path'=>$item->simple_products->path])}}" class="item-thumb" target="_blank"> <img src="{{ $item->simple_products->image }}"></a>
-                                @endforeach
-                            @endif
-                        </div>
+                        @if($configurableProductItem != null)
+                            <h4 class="text-center bg-success text-light">Combo sách gồm có: </h4>
+                            <div class="thumbs-wrap">
+                                    @foreach ($configurableProductItem as $item)
+                                        <a href="{{ route('product-details',['id'=>$item->simple_products->id,'path'=>$item->simple_products->path])}}" class="item-thumb" target="_blank"> <img src="{{ $item->simple_products->image }}"></a>
+                                    @endforeach
+
+                            </div>
+                        @endif
                     </article>
                 </aside>
                 <main class="col-6 border-left">
@@ -37,6 +38,9 @@
                             <var class="price h4">@if ($product->discount_price != 0) {{ $product->discount_price }} @else {{ $product->regular_price }} @endif</var>
                             <span class="text-muted">/sản phẩm</span>
                         </div> <!-- price-detail-wrap .// -->
+                        @if($product->short_description && $configurableProductItem != null)
+                            {!! $product->short_description !!}
+                        @endif
                         @if($product->description)
                             {!! $product->description->content !!}
                         @endif

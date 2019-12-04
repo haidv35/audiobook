@@ -55,6 +55,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group mt-2" id='product-list'>
+                                                <label for="selectpicker">Chọn sản phẩm</label>
                                                 <select class="selectpicker" multiple data-live-search="true">
                                                     @foreach ($products as $product)
                                                         <option value="{{ $product->id }}">{{ $product->title }}</option>

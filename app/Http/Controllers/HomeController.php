@@ -68,10 +68,10 @@ class HomeController extends Controller
         $demoLinks_count = Product::where([['type','simple'],['demo_link', '!=', '0']])->count();
         if($product_count > 8) $product_count = 8;
         if($demoLinks_count > 2) $demoLinks_count = 2;
-        $demoLinks = Product::where([['type','simple'],['demo_link', '!=', '0']])->orderBy('id', 'desc')->take(10)->get()->random(2);
+        $demoLinks = Product::where([['type','simple'],['demo_link', '!=', '0']])->take(300)->get()->random(2);
         $newProduct = $this->getProductsByType('new_product');
         $hotProduct = $this->getProductsByType('hot_product');
-        $recommendProduct = Product::where('type','simple')->orderBy('id', 'desc')->take(10)->get()->random($product_count);
+        $recommendProduct = Product::where('type','simple')->take(300)->get()->random($product_count);
 
         $configurableProduct = Product::where('type','configurable')->get();
 
@@ -139,13 +139,12 @@ class HomeController extends Controller
         else{
             $configurableProductItem = null;
         }
-
-
         $this->getUserOrderedProducts(Auth::id());
         if($id == null || $path == null){
             return back();
         }
         $getProductById = Product::with('category')->find($id);
+        $this->convertToVnString(array($getProductById));
         $recommendProduct = Product::limit(4)->inRandomOrder()->get();
         $this->convertToVnString($recommendProduct);
         if ($id == null || $getProductById == null) return redirect()->route('homepage');

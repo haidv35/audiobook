@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert(
+        DB::table('users')->insert([
             [
                 'firstname' => 'Hai',
                 'lastname' => 'Clover',
@@ -28,13 +28,12 @@ class UsersTableSeeder extends Seeder
                 'firstname' => 'Mr',
                 'lastname' => 'kezy',
                 'username' => 'Mrkezy',
-                // 'email_verified_at' => Carbon::now()->timestamp,
                 'email' => 'taan@lat.com.vn',
                 'password' => bcrypt('hoilamgi123@'),
                 'phone' => '0123456789',
                 'address' => 'HN',
                 'role' => 'admin'
             ]
-        );
+        ]);
     }
 }
