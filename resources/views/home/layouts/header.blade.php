@@ -20,14 +20,18 @@
 <link href="/images/logo.png" rel="shortcut icon" type="image/x-icon">
 
 @yield('custom-header')
+
+@php
+    $timestamp = Carbon\Carbon::now()->timestamp;
+@endphp
 <!-- Bootstrap4 files-->
-<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="/css/bootstrap.css?v={{ $timestamp }}" rel="stylesheet" type="text/css" />
 
 <!-- Font awesome 5 -->
-<link href="/font-awesome/css/all.min.css" type="text/css" rel="stylesheet">
+<link href="/font-awesome/css/all.min.css?v={{ $timestamp }}" type="text/css" rel="stylesheet">
 
 <!-- custom style -->
-<link href="/css/ui.css" rel="stylesheet" type="text/css" />
-<link href="/css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
-<link href="/css/style.css" rel="stylesheet" type="text/css" />
-<link href="/css/footer-animate.css" rel="stylesheet" type="text/css" />
+<link href="/css/ui.css?v={{ $timestamp }}" rel="stylesheet" type="text/css" />
+<link href="/css/responsive.css?v={{ $timestamp }}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+<link href="/css/style.css?v={{ $timestamp }}" rel="stylesheet" type="text/css" />
+<link href="/css/footer-animate.css?v={{ $timestamp }}" rel="stylesheet" type="text/css" />

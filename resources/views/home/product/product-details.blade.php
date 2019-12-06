@@ -7,10 +7,10 @@
 @endsection
 @section('app-main')
 <div class="row" style="margin:2rem 0 5rem 0;">
-    <div class="col-12">
+    <div class="col-lg-12">
         <div class="card">
             <div class="row no-gutters">
-                <aside class="col-6">
+                <aside class="col-lg-6">
                     <article class="gallery-wrap">
                         <div class="img-big-wrap">
                             <div> <a href="javascript:void(0)"><img src="{{ $product->image }}"></a></div>
@@ -34,7 +34,7 @@
                         @endif
                     </article>
                 </aside>
-                <main class="col-6 border-left">
+                <main class="col-lg-6 border-left">
                     <article class="content-body">
 
                         <h2 class="title">{{ $product->title }}</h2>
@@ -83,8 +83,8 @@
                         @php
                             $check_ordered = 0;
                         @endphp
-                        @if (0 != count($orderedProducts))
-                            @foreach ($orderedProducts[0] as $item)
+                        @if(0 != count($orderedProducts))
+                            @foreach ($orderedProducts as $item)
                                 @if ($item->product_id === $product->id)
                                     @php
                                         $check_ordered = 1;
@@ -117,7 +117,7 @@
 </div>
 <div class="container-fluid">
     <div class="row mb-4">
-        <div class="col-6">
+        <div class="col-lg-6">
             <div class="row">
                 <div class="col-12">
                     <h3 class="text-center bg-dark text-light">Bình luận</h3>
@@ -129,7 +129,7 @@
             </div>
 
         </div>
-        <div class="col-6">
+        <div class="col-lg-6">
             <div class="col-lg-12">
                 <h3 class="text-center bg-dark text-light">Có thể bạn quan tâm</h3>
             </div>

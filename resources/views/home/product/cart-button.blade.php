@@ -1,8 +1,8 @@
 @php
     $checkOrdered = 0;
 @endphp
-@if (0 != count($orderedProducts))
-    @foreach ($orderedProducts[0] as $item)
+@if(0 != count($orderedProducts))
+    @foreach ($orderedProducts as $item)
         @if ($item->product_id === $product->id)
             @php
                 $checkOrdered = 1;
@@ -25,3 +25,4 @@
     <a href="@if (Auth::user()) # @else /login/#! @endif" class="btn btn-outline-primary @if($view === 'all-product') ?  btn-block : '' @else btn-sm  @endif float-right {{Auth::user() ? 'add-to-cart' : 'login-before_order' }}" data-id="{{ $product->id }}" data-title="{{ $product->title }}" data-category="@if($product->category) {{ $product->category->name }} @endif" data-regular_price="{{ $product->regular_price }}" data-discount_price="{{ $product->discount_price }}">Thêm vào giỏ hàng <i
     class="fa fa-shopping-cart"></i></a>
 @endif
+

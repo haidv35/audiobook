@@ -1021,7 +1021,7 @@ a[class*='card'] {
     text-align: center;
     display: block; }
   .gallery-wrap .img-big-wrap img {
-    margin: 6rem 3rem 3rem 3rem;
+    margin: 3rem 0 3rem 0;
     height: 460px;
     width: auto;
     display: inline-block;

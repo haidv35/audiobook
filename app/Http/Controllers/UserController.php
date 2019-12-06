@@ -130,8 +130,12 @@ class UserController extends Controller
                 }
             }
         }
-
-        $data['data'] = $list_items_purchased;
+        $list_items_purchased = $list_items_purchased->unique('id');
+        $list = collect();
+        foreach($list_items_purchased as $item){
+            $list->add($item);
+        }
+        $data['data'] = $list;
         return json_encode($data);
     }
 

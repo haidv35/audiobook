@@ -33,16 +33,17 @@ class HomeController extends Controller
     {
         $this->orderedProducts = collect();
         $this->orders = Order::where([['user_id',$user_id],['status','!=', 'canceled']])->get();
+
         foreach ($this->orders as $orderValue) {
             //add status to product
-            $orderDetail = OrderDetail::where(['order_id' => $orderValue->id])->get();
-            $orderDetail = json_decode($orderDetail);
-            foreach ($orderDetail as $orderDetailValue) {
+            $orderDetail = OrderDetail::where('order_id' , $orderValue->id)->get();
+            foreach($orderDetail as $orderDetailValue){
                 $orderDetailValue->status = $orderValue->status;
                 $orderDetailValue->order_code = $orderValue->order_code;
+                $this->orderedProducts->add($orderDetailValue);
             }
-            $this->orderedProducts->add($orderDetail);
         };
+        $this->orderedProducts = $this->orderedProducts->unique('product_id');
     }
     public function getProductsByType($type)
     {
@@ -80,7 +81,6 @@ class HomeController extends Controller
         $this->convertToVnString($hotProduct);
         $this->convertToVnString($recommendProduct);
         $this->convertToVnString($configurableProduct);
-
         return view('home.home')->with(['demoLinks' => $demoLinks, 'newProduct' => $newProduct, 'hotProduct' => $hotProduct, 'recommendProduct' => $recommendProduct, 'orderedProducts' => $this->orderedProducts,'configurableProduct'=>$configurableProduct]);
     }
 
@@ -208,7 +208,7 @@ class HomeController extends Controller
                 foreach($productConfigurable as $key => $value){
                     $getSimpleProduct = Product::where('id',$value->product_simple_id)->first();
                     $price = ($getSimpleProduct->discount_price != 0) ? $getSimpleProduct->discount_price : $getSimpleProduct->regular_price;
-                    OrderDetail::updateOrCreate(['order_id' => $orders->id, 'product_id' => $getSimpleProduct->id, 'title' => $getSimpleProduct->title, 'category' => json_decode($getSimpleProduct->category)->name, 'regular_price' => $getSimpleProduct->regular_price, 'discount_price' => $getSimpleProduct->discount_price, 'price' => $price, 'promo_code_id' => null]);
+                    OrderDetail::updateOrCreate(['order_id' => $orders->id, 'product_id' => $getSimpleProduct->id, 'title' => $getSimpleProduct->title, 'category' => $getSimpleProduct->category->name, 'regular_price' => $getSimpleProduct->regular_price, 'discount_price' => $getSimpleProduct->discount_price, 'price' => $price, 'promo_code_id' => null]);
                 }
             }
             OrderDetail::updateOrCreate(['order_id' => $orders->id, 'product_id' => $cart->id, 'title' => $cart->title, 'category' => $cart->category, 'regular_price' => $cart->regular_price, 'discount_price' => $cart->discount_price, 'price' => $cart->price, 'promo_code_id' => null]);
