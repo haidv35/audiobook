@@ -15,6 +15,8 @@ $("#btn-submit").click(function(e) {
 
     var getFormData = new FormData($("#upload-form")[0]);
     getFormData.append("product_list", product_list);
+    let shortDescription = CKEDITOR.instances['short_description'].getData();
+    getFormData.append("short_description", shortDescription);
     $.ajax({
         type: "POST",
         url: admin_product_configurable_store,
@@ -26,6 +28,7 @@ $("#btn-submit").click(function(e) {
         success: function(d) {
             console.log(d);
             isSuccess(d);
+            location.replace("/admin/product/configurable");
         },
         error: function(xhr, status, error) {
             console.log(xhr);

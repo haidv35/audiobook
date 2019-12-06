@@ -135,7 +135,7 @@ class ProductController extends Controller
     }
 
     public function createConfigurable(){
-        $products = Product::all();
+        $products = Product::where('type','=','simple')->get();
         return view('admin.product.create_configurable_product')->with(['products'=>$products]);
     }
 

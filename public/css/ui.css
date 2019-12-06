@@ -1030,8 +1030,8 @@ a[class*='card'] {
 .gallery-wrap .thumbs-wrap {
   text-align: center; }
   .gallery-wrap .thumbs-wrap .item-thumb {
-    width: 10rem; /*60px*/
-    height: 10rem;
+    width: 3.5rem; /*60px*/
+    height: 4.5rem;
     border: 1px solid #ddd;
     border-radius: 6px;
     margin: 3px;

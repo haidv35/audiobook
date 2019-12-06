@@ -8,7 +8,7 @@
             -webkit-overflow-scrolling: touch;
         }
         .custom-list-group-item{
-            padding: 1rem 0rem 1rem 2rem!important;
+            padding: 1rem 0rem 1.5rem 2rem!important;
             border-bottom: 1px dashed black!important;
             margin-bottom: 1px!important;
         }

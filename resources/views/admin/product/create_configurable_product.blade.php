@@ -1,6 +1,5 @@
 @extends('admin.layouts.app')
 @section('custom-header')
-    <link rel="stylesheet" href="/ckeditor/toolbarconfigurator/lib/codemirror/neo.css">
     <link rel="stylesheet" href="/css/bootstrap-select.css" />
     <style>
         .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn){

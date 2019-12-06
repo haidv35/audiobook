@@ -28,7 +28,7 @@
                             <h4 class="text-center bg-success text-light">Combo sách gồm có: </h4>
                             <div class="thumbs-wrap">
                                 @foreach ($configurableProductItem as $item)
-                                    <a href="{{ route('product-details',['id'=>$item->simple_products->id,'path'=>$item->simple_products->path])}}" class="item-thumb" style="" target="_blank"> <img src="{{ $item->simple_products->image }}"></a>
+                                    <a href="{{ route('product-details',['id'=>$item->simple_products->id,'path'=>$item->simple_products->path])}}" class="item-thumb" style="" target="_blank" data-toggle="tooltip" data-placement="top" title="{{ $item->simple_products->title }}"> <img src="{{ $item->simple_products->image }}"></a>
                                 @endforeach
                             </div>
                         @endif

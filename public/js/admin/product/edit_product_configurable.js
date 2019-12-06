@@ -19,6 +19,8 @@ $("#btn-submit").click(function(e) {
 
     var getFormData = new FormData($("#upload-form")[0]);
     getFormData.append("product_list", product_list);
+    let shortDescription = CKEDITOR.instances['short_description'].getData();
+    getFormData.append("short_description", shortDescription);
     $.ajax({
         type: "POST",
         url: update_product_configurable_url,
