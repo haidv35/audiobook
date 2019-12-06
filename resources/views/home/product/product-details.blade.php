@@ -40,6 +40,11 @@
                         <h2 class="title">{{ $product->title }}</h2>
 
                         <div class="mb-3">
+                            {{-- @if($product->regular_price != 0 && $product->discount_price != 0)
+                                <var class="price h4">@if ($product->discount_price != 0) {{ $product->discount_price }} @else {{ $product->regular_price }} @endif</var>
+                            @else
+                                <var class="h4 text-dark">0 <span style="text-decoration: underline;">đ</span></var>
+                            @endif --}}
                             <var class="price h4">@if ($product->discount_price != 0) {{ $product->discount_price }} @else {{ $product->regular_price }} @endif</var>
                             <span class="text-muted">/sản phẩm</span>
                         </div> <!-- price-detail-wrap .// -->
@@ -80,34 +85,42 @@
                                 </div>
                             </div>
                         </div> --}}
-                        @php
-                            $check_ordered = 0;
-                        @endphp
-                        @if(0 != count($orderedProducts))
-                            @foreach ($orderedProducts as $item)
-                                @if ($item->product_id === $product->id)
-                                    @php
-                                        $check_ordered = 1;
-                                    @endphp
-                                    @if ($item->status == 'paid')
-                                        <a href="/user/purchased/{{ $item->product_id }}" class="btn btn-success btn-block">
-                                            <i class="fas fa-shopping-cart"></i>
-                                            <span class="text">Xem nội dung sản phẩm</span>
-                                        </a>
-                                    @elseif($item->status == 'unpaid')
-                                        <a href="/pay/{{ $item->order_code}}" class="btn btn-outline-warning btn-block">Thanh toán <i
-                                        class="fa fa-check"></i>
-                                        </a>
-                                    @endif
-                                @break
-                                @endif
-                            @endforeach
-                        @endif
-                        @if ($check_ordered == 0)
-                            <a href="{{ Auth::user() ? '#' : '/login/#!' }}" class="btn btn-outline-primary {{ Auth::user() ? 'add-to-cart' : 'login-before_order' }}" data-id="{{ $product->id }}" data-title="{{ $product->title }}" data-category="@if(isset($product->category)) {{ $product->category->name }} @endif" data-regular_price="{{ $product->regular_price }}" data-discount_price="{{ $product->discount_price }}">
-                                <span class="text">Thêm vào giỏ hàng</span>
+
+                        @if($product->regular_price == 0 && $product->discount_price == 0)
+                            <a href="{{ route('free',['id'=>$product->id]) }}" class="btn btn-success btn-block">
                                 <i class="fas fa-shopping-cart"></i>
+                                <span class="text">Xem nội dung sản phẩm</span>
                             </a>
+                        @else
+                            @php
+                                $check_ordered = 0;
+                            @endphp
+                            @if(0 != count($orderedProducts))
+                                @foreach ($orderedProducts as $item)
+                                    @if ($item->product_id === $product->id)
+                                        @php
+                                            $check_ordered = 1;
+                                        @endphp
+                                        @if ($item->status == 'paid')
+                                            <a href="/user/purchased/{{ $item->product_id }}" class="btn btn-success btn-block">
+                                                <i class="fas fa-shopping-cart"></i>
+                                                <span class="text">Xem nội dung sản phẩm</span>
+                                            </a>
+                                        @elseif($item->status == 'unpaid')
+                                            <a href="/pay/{{ $item->order_code}}" class="btn btn-outline-warning btn-block">Thanh toán <i
+                                            class="fa fa-check"></i>
+                                            </a>
+                                        @endif
+                                    @break
+                                    @endif
+                                @endforeach
+                            @endif
+                            @if ($check_ordered == 0)
+                                <a href="{{ Auth::user() ? '#' : '/login/#!' }}" class="btn btn-outline-primary {{ Auth::user() ? 'add-to-cart' : 'login-before_order' }}" data-id="{{ $product->id }}" data-title="{{ $product->title }}" data-category="@if(isset($product->category)) {{ $product->category->name }} @endif" data-regular_price="{{ $product->regular_price }}" data-discount_price="{{ $product->discount_price }}">
+                                    <span class="text">Thêm vào giỏ hàng</span>
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
+                            @endif
                         @endif
                     </article> <!-- product-info-aside .// -->
                 </main> <!-- col.// -->

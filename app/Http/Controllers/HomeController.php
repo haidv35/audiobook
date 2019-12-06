@@ -165,6 +165,42 @@ class HomeController extends Controller
     {
         return view('home.cart.cart');
     }
+    //Pay
+    public function getPay($orderCode = null)
+    {
+        $orders = Order::where(['user_id' => Auth::id()])->paginate(10);
+        if ($orderCode == null) {
+            return back();
+        } else {
+            $orders = Order::where(['user_id' => Auth::id(), 'order_code' => $orderCode])->get();
+            if (0 == count($orders)) {
+                return redirect()->route('homepage');
+            }
+            $orders = $orders[0];
+            if ($orders->amount == $orders->paid && $orders->status == 'paid') {
+                return redirect()->route('user.orders');
+            }
+            else {
+                $paymentMethods = PaymentMethod::all();
+                $bank = json_decode($paymentMethods[0]->info);
+                $momo = json_decode($paymentMethods[1]->info);
+
+                $orderDetails = OrderDetail::where('order_id', $orders->id)->get();
+
+                $amount = $orders->amount;
+                $paymentCodes = PaymentCode::where(['user_id' => Auth::id(), 'order_id' => $orders->id])->get();
+                $orderDetailItems = Order::find($orders->id)->order_details;
+
+                foreach($orderDetailItems as $key => $orderDetailItem){
+                    $simpleProduct = Product::where([['id',$orderDetailItem->product_id],['type','simple']])->first();
+                    if(isset($simpleProduct)){
+                        unset($orderDetailItems[$key]);
+                    }
+                }
+                return view('home.cart.pay')->with(['orderDetailItems' => $orderDetailItems, 'bank' => $bank, 'momo' => $momo, 'paymentCodes' => $paymentCodes, 'amount' => $amount]);
+            }
+        }
+    }
 
     public function getCheckout($userId = null, $user = null)
     {
@@ -223,40 +259,13 @@ class HomeController extends Controller
         ]);
     }
 
-    //Pay
-    public function getPay($orderCode = null)
-    {
-        $orders = Order::where(['user_id' => Auth::id()])->paginate(10);
-        if ($orderCode == null) {
-            return back();
-        } else {
-            $orders = Order::where(['user_id' => Auth::id(), 'order_code' => $orderCode])->get();
-            if (0 == count($orders)) {
-                return redirect()->route('homepage');
-            }
-            $orders = $orders[0];
-            if ($orders->amount == $orders->paid && $orders->status == 'paid') {
-                return redirect()->route('user.orders');
-            }
-            else {
-                $paymentMethods = PaymentMethod::all();
-                $bank = json_decode($paymentMethods[0]->info);
-                $momo = json_decode($paymentMethods[1]->info);
-
-                $orderDetails = OrderDetail::where('order_id', $orders->id)->get();
-
-                $amount = $orders->amount;
-                $paymentCodes = PaymentCode::where(['user_id' => Auth::id(), 'order_id' => $orders->id])->get();
-                $orderDetailItems = Order::find($orders->id)->order_details;
-
-                foreach($orderDetailItems as $key => $orderDetailItem){
-                    $simpleProduct = Product::where([['id',$orderDetailItem->product_id],['type','simple']])->first();
-                    if(isset($simpleProduct)){
-                        unset($orderDetailItems[$key]);
-                    }
-                }
-                return view('home.cart.pay')->with(['orderDetailItems' => $orderDetailItems, 'bank' => $bank, 'momo' => $momo, 'paymentCodes' => $paymentCodes, 'amount' => $amount]);
-            }
+    public function getFree($id = null){
+        $product = Product::where([['id',$id],['regular_price',0],['discount_price',0]])->first();
+        $order = OrderDetail::where('product_id',$product->id)->first();
+        if(empty($order)){
+            $order = Order::updateOrCreate(['user_id' => Auth::id(), 'status' => 'paid', 'order_code' => '0', 'amount' => 0, 'paid' => 0, 'ordered_at' => Carbon::now()->setTimezone('Asia/Ho_Chi_Minh'), 'paid_at' => Carbon::now()->setTimezone('Asia/Ho_Chi_Minh'), 'canceled_at' => Carbon::minValue()]);
+            OrderDetail::updateOrCreate(['order_id' => $order->id, 'product_id' => $product->id, 'title' => $product->title, 'category' => $product->category->name, 'regular_price' => $product->regular_price, 'discount_price' => $product->discount_price, 'price' => 0, 'promo_code_id' => null]);
         }
+        return redirect()->route('user.purchased',['id'=>$id]);
     }
 }

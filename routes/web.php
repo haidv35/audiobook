@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('checkout/{user_id?}/{user?}', 'HomeController@getCheckout');
     Route::post('checkout', 'HomeController@postCheckout')->name('cart.checkout');
     Route::get('pay/{order_code?}', 'HomeController@getPay');
+
+    Route::get('get-free/{id?}','HomeController@getFree')->name('free');
 });
 
 Route::group(['prefix' => 'momo_payment_automatic'], function () {
@@ -59,7 +61,7 @@ Route::group(['middleware'=>'auth','prefix' => 'user'], function () {
     Route::get('profile','UserController@getProfile');
     Route::post('profile','UserController@postProfile');
     Route::get('orders/{order_code?}','UserController@getOrder')->name('user.orders');
-    Route::get('purchased/{product_id?}','UserController@getListItemPurchased');
+    Route::get('purchased/{product_id?}','UserController@getListItemPurchased')->name('user.purchased');
     Route::get('getItemPurchasedJson','UserController@getItemPurchasedJson');
     Route::get('qr-code', function () {
         return QrCode::size(500)->generate('Welcome to kerneldev.com!');

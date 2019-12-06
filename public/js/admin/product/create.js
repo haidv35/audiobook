@@ -17,6 +17,7 @@ $("#btn-submit").click(function(e) {
         processData: false,
         success: function(d) {
             isSuccess(d);
+            location.replace("/admin/product");
         },
         error: function(xhr, status, error) {
             let errorsData = JSON.parse(xhr.responseText).errors;
