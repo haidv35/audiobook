@@ -30,6 +30,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('get-free/{id?}','HomeController@getFree')->name('free');
 });
 
+// Route::get('momo', 'Admin\MomoPaymentController@momo');
+Route::post('bank', 'Admin\BankPaymentController@index');
+
 Route::group(['prefix' => 'momo_payment_automatic'], function () {
     Route::get('/','Admin\MomoPaymentController@index')->name('momo');
     Route::get('/spamToInbox','Admin\MomoPaymentController@spamToInbox')->name('momo.spamtoinbox');

@@ -62,10 +62,6 @@ class OrderListController extends Controller
         else{
             $order_detail = OrderDetail::with('product')->where('order_id',$order_id)->get();
             foreach($order_detail as $key => $item){
-                // $configurableProduct = Product::where([['id',$item->product_id],['type','simple']])->first();
-                // if(isset($configurableProduct)){
-                //     unset($order_detail[$key]);
-                // }
                 $configurableProduct = ProductConfigurable::where('product_simple_id',$item->product_id)->get();
                 foreach($configurableProduct as $simpleProduct){
                     if($item->product_id == $simpleProduct->product_simple_id){

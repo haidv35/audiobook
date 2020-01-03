@@ -67,7 +67,7 @@
                     <span class="@if($order->paid != 0) price @endif" style="color:green;font-weight:bold;">{{ ($order->paid != 0) ? $order->paid : 0  }}</span>
                 </td>
                 <td class="align-middle">
-                    <span class="@if($order->amount - $order->paid != 0) price @endif" style="color:red;font-weight:bold;">{{ $order->amount - $order->paid }}</span>
+                    <span class="@if($order->amount > $order->paid) price @endif" style="color:red;font-weight:bold;">@if($order->amount > $order->paid) {{ $order->amount - $order->paid }} @else 0 @endif</span>
                 </td>
                 <td class="align-middle" style="max-width: 120px;">
                     @if ($order->status == 'unpaid')

@@ -45,8 +45,18 @@
                             @else
                                 <var class="h4 text-dark">0 <span style="text-decoration: underline;">đ</span></var>
                             @endif --}}
-                            <var class="price h4">@if ($product->discount_price != 0) {{ $product->discount_price }} @else {{ $product->regular_price }} @endif</var>
-                            <span class="text-muted">/sản phẩm</span>
+                            @if($product->discount_price == 0 && $product->regular_price == 0)
+                                <span style="color: red;">Miễn Phí</span>
+                            @else
+                                <var class="price h4">
+                                    @if ($product->discount_price != 0)
+                                        {{ $product->discount_price }}
+                                    @else
+                                        {{ $product->regular_price }}
+                                    @endif
+                                </var>
+                                <span class="text-muted">/sản phẩm</span>
+                            @endif
                         </div> <!-- price-detail-wrap .// -->
                         @if($product->short_description && $configurableProductItem != null)
                             {!! $product->short_description !!}

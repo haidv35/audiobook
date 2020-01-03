@@ -235,7 +235,7 @@ class HomeController extends Controller
             $amount += $cart->price;
         }
         $orders = Order::create(['user_id' => Auth::id(), 'status' => 'unpaid', 'order_code' => '0', 'amount' => $amount, 'paid' => 0, 'ordered_at' => Carbon::now()->setTimezone('Asia/Ho_Chi_Minh'), 'paid_at' => Carbon::minValue(), 'canceled_at' => Carbon::minValue()]);
-        $orderCode = 'D' . Carbon::now()->isoformat('DD') . Carbon::now()->isoformat('MM') . substr(strtoupper(hash('md5', hash('sha256', $orders->id))), rand(0, 28), 4);
+        $orderCode = Carbon::now()->isoformat('DD') . Carbon::now()->isoformat('MM') . Carbon::now()->isoformat('YY') . substr(strtoupper(hash('md5', hash('sha256', $orders->id))), rand(0, 28), 4);
         Order::where('id', $orders->id)->update(['order_code' => $orderCode]);
 
         foreach ($carts as $key => $cart) {

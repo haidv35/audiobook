@@ -100,10 +100,20 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-3  d-flex align-items-center justify-content-start">
+                            <label for="excess_cash">Tiền thừa</label>
+                        </div>
+                        <div class="col-lg-12 col-xl-9">
+                            <input type="text" class="form-control price-lite" name="excess_cash" id="excess_cash" placeholder="" value="@if($order->paid > $order->amount) {{ $order->paid - $order->amount }} @endif" disabled="">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-3  d-flex align-items-center justify-content-start">
                             <label for="balance">Còn nợ</label>
                         </div>
                         <div class="col-lg-12 col-xl-9">
-                            <input type="text" class="form-control price-lite" name="balance" id="balance" placeholder="" value="{{ $order->amount - $order->paid }}" disabled="">
+                            <input type="text" class="form-control price-lite" name="balance" id="balance" placeholder="" value="@if($order->paid < $order->amount) {{ $order->amount - $order->paid }} @endif" disabled="">
                         </div>
                     </div>
                 </div>

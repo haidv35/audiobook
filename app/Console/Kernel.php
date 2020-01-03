@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('vcb:ap')->everyMinute();
         $schedule->command('momo:sti')->everyMinute();
         $schedule->command('momo:ap')->everyMinute();
         $schedule->command('queue:work --once')->everyMinute();

@@ -14,6 +14,7 @@ use App\Setting;
 use Illuminate\Support\Facades\Config;
 use App\Jobs\MomoPaymentCheck;
 use Auth;
+use Dacastro4\LaravelGmail\Facade\LaravelGmail;
 
 class MomoPaymentController extends Controller
 {
@@ -31,6 +32,10 @@ class MomoPaymentController extends Controller
     {
         MomoPaymentCheck::dispatchNow();
     }
+
+    public function momo(){
+    }
+
     public function spamToInbox(){
         try{
             $oClient = Client::account('gmail');

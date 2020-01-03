@@ -42,7 +42,7 @@ class UserController extends Controller
         foreach($paid_orders as $key => $value){
             $total += $value->amount;
         }
-        $balance = $total - $paid;
+        $balance = ($total > $paid) ? $total - $paid : 0;
         return view('user.dashboard')->with(['paid_order_count'=>$paid_order_count,'paid_product_count'=>$paid_product_count,'paid'=>$paid,'balance'=>$balance]);
     }
 
