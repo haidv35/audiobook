@@ -26,7 +26,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('checkout/{user_id?}/{user?}', 'HomeController@getCheckout');
     Route::post('checkout', 'HomeController@postCheckout')->name('cart.checkout');
     Route::get('pay/{order_code?}', 'HomeController@getPay');
+
+    Route::get('get-free/{id?}','HomeController@getFree')->name('free');
 });
+
+// Route::get('momo', 'Admin\MomoPaymentController@momo');
+Route::post('bank', 'Admin\BankPaymentController@index');
 
 Route::group(['prefix' => 'momo_payment_automatic'], function () {
     Route::get('/','Admin\MomoPaymentController@index')->name('momo');
@@ -59,7 +64,7 @@ Route::group(['middleware'=>'auth','prefix' => 'user'], function () {
     Route::get('profile','UserController@getProfile');
     Route::post('profile','UserController@postProfile');
     Route::get('orders/{order_code?}','UserController@getOrder')->name('user.orders');
-    Route::get('purchased/{product_id?}','UserController@getListItemPurchased');
+    Route::get('purchased/{product_id?}','UserController@getListItemPurchased')->name('user.purchased');
     Route::get('getItemPurchasedJson','UserController@getItemPurchasedJson');
     Route::get('qr-code', function () {
         return QrCode::size(500)->generate('Welcome to kerneldev.com!');
@@ -80,13 +85,17 @@ Route::group(['middleware' => ['is.admin','web']], function () {
             Route::post('status','Admin\ProductController@setStatus')->name('admin.product.status');
             Route::get('create','Admin\ProductController@create')->name('admin.product.create');
             Route::post('store','Admin\ProductController@store')->name('admin.product.store');
-            Route::group(['prefix' => 'configurable'], function () {
-                Route::get('create','Admin\ProductController@createConfigurable')->name('admin.product.createConfigurable');
-                Route::post('store','Admin\ProductController@storeConfigurable')->name('admin.product.storeConfigurable');
-            });
             Route::get('edit/{id}','Admin\ProductController@edit')->name('admin.product.edit');
             Route::post('update/{id}','Admin\ProductController@update')->name('admin.product.update');
             Route::any('delete/{id}','Admin\ProductController@destroy')->name('admin.product.destroy');
+            Route::group(['prefix' => 'configurable'], function () {
+                Route::get('/','Admin\ProductController@indexConfigurable');
+                Route::get('create','Admin\ProductController@createConfigurable')->name('admin.product.createConfigurable');
+                Route::post('store','Admin\ProductController@storeConfigurable')->name('admin.product.storeConfigurable');
+                Route::get('edit/{id}','Admin\ProductController@editConfigurable')->name('admin.product.editConfigurable');
+                Route::post('update/{id}','Admin\ProductController@updateConfigurable')->name('admin.product.updateConfigurable');
+                Route::any('delete/{id}','Admin\ProductController@destroyConfigurable')->name('admin.product.destroyConfigurable');
+            });
             //Import excel
             Route::get('import_export','Admin\ProductController@importExportView')->name('admin.product.import_export');
             Route::post('import','Admin\ProductController@import')->name('admin.product.import');

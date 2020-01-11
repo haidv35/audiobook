@@ -98,7 +98,7 @@
                                             </div>
                                             <div class="form-group mt-2" id="product_links">
                                                 {!! Form::label('product_link', 'Link sản phẩm') !!}
-                                                <button type="button" id="add_product_links" class="btn btn-dark mb-1 float-right">Add More</button>
+                                                <button type="button" id="add_product_links" class="btn btn-dark mb-1 float-right">Thêm</button>
                                                 @foreach ($product_links as $key => $product_link)
                                                     {{ Form::hidden('product_links_id[]', $product_link->id) }}
                                                     {{ Form::text('product_links[]',$product_link->content, ['class' => 'form-control mb-1']) }}
@@ -129,7 +129,7 @@
                                                 {!! Form::number('qty_purchased', $product->qty_purchased,['class' => 'form-control']) !!}
                                             </div>
                                             <hr class="mb-4">
-                                            <button class="btn btn-success btn-lg btn-block" type="button" id="btn-submit">Update</button>
+                                            <button class="btn btn-success btn-lg btn-block" type="button" id="btn-submit">Cập nhật</button>
                                             {{-- {!! Form::submit('Save', ['class'=>"btn btn-primary"]) !!} --}}
                                         </div>
                                     </fieldset>

@@ -42,7 +42,7 @@
                         <a href="javascript:void(0)" class="metric metric-bordered align-items-center">
                             <h2 class="metric-label"> Số tiền chưa thanh toán </h2>
                             <p class="metric-value h3">
-                                <sub><i class="fa fa-dollar-sign"></i></sub> <span class="value price">{{ $balance }}</span>
+                                <sub><i class="fa fa-dollar-sign"></i></sub> <span class="value @if($balance != 0) price @endif">{{ $balance }}</span>
                             </p>
                         </a> <!-- /.metric -->
                     </div><!-- /metric column -->

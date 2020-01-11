@@ -11,7 +11,6 @@ $('.price').formatCurrency({
     groupDigits: true,
     roundToDecimalPlace:3,
 });
-
 $('.price-lite').formatCurrency({
     symbol: '',
     positiveFormat: '%n %s',

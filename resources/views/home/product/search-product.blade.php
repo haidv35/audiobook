@@ -23,8 +23,12 @@
                             {{-- text-truncate --}}
                             <div class="mt-2 row">
                                 <div class="col-6">
-                                    <var class="price">{{ $product->discount_price }}</var> <!-- price-wrap.// -->
-                                    <p class="text-muted price" style="text-decoration: line-through;">{{ $product->regular_price }}</p>
+                                    @if ($product->discount_price != 0 && $product->regular_price != 0)
+                                        <var class="price">{{ $product->discount_price }}</var> <!-- price-wrap.// -->
+                                        <p class="text-muted price" style="text-decoration: line-through;">{{ $product->regular_price }}</p>
+                                    @else
+                                        <var class="" style="color:red;">Miễn Phí</var> <!-- price-wrap.// -->
+                                    @endif
                                 </div>
                                 <div class="col-6">
                                     @includeIf('home.product.cart-button',['view'=>'new-product'])

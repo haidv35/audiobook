@@ -38,13 +38,16 @@
     <!-- GOOGLE FONT -->
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet"><!-- End GOOGLE FONT -->
     <!-- BEGIN PLUGINS STYLES -->
-    <link rel="stylesheet" href="/looper/assets/vendor/open-iconic/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="/looper/assets/vendor/fontawesome/css/all.css">
-    <link rel="stylesheet" href="/looper/assets/vendor/flatpickr/flatpickr.min.css"><!-- END PLUGINS STYLES -->
+    @php
+        $timestamp = Carbon\Carbon::now()->timestamp;
+    @endphp
+    <link rel="stylesheet" href="/looper/assets/vendor/open-iconic/css/open-iconic-bootstrap.min.css?v={{ $timestamp }}">
+    <link rel="stylesheet" href="/looper/assets/vendor/fontawesome/css/all.css?v={{ $timestamp }}">
+    <link rel="stylesheet" href="/looper/assets/vendor/flatpickr/flatpickr.min.css?v={{ $timestamp }}"><!-- END PLUGINS STYLES -->
     <!-- BEGIN THEME STYLES -->
-    <link rel="stylesheet" href="/looper/assets/stylesheets/theme.min.css" data-skin="default">
-    <link rel="stylesheet" href="/looper/assets/stylesheets/theme-dark.min.css" data-skin="dark">
-    <link rel="stylesheet" href="/looper/assets/stylesheets/custom.css"><!-- Disable unused skin immediately -->
+    <link rel="stylesheet" href="/looper/assets/stylesheets/theme.min.css?v={{ $timestamp }}" data-skin="default">
+    <link rel="stylesheet" href="/looper/assets/stylesheets/theme-dark.min.css?v={{ $timestamp }}" data-skin="dark">
+    <link rel="stylesheet" href="/looper/assets/stylesheets/custom.css?v={{ $timestamp }}"><!-- Disable unused skin immediately -->
     @yield('custom-header')
     <script>
       var skin = localStorage.getItem('skin') || 'default';

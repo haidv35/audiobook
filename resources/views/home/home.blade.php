@@ -4,10 +4,10 @@
     <link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
 @endsection
 @section('app-main')
-
     @if (empty($searchProduct))
         @includeWhen(!empty($slider) ? true : false ,'home.layouts.intro',$slider)
         @includeWhen(0 != count($demoLinks) ? true : false,'home.product.try-listening',$demoLinks)
+        @includeWhen(0 != count($configurableProduct) ? true : false,'home.product.configurable-product',$configurableProduct)
         @includeWhen(0 != count($hotProduct) ? true : false,'home.product.hot-product',$hotProduct)
         @includeWhen(0 != count($newProduct) ? true : false,'home.product.new-product',$newProduct)
         @includeWhen(0 != count($recommendProduct) ? true : false,'home.product.recommend-product',$recommendProduct)

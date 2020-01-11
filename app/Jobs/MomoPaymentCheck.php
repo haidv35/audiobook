@@ -81,14 +81,14 @@ class MomoPaymentCheck implements ShouldQueue
                 $payment_code = Order::find($order->id)->payment_code[1]->code;
                 preg_replace("/\s+/",'',$payment_code);
                 if(strtolower(trim($payment_code)) == strtolower(trim($getText))){
-                    if($order->paid + $getPrice == $order->amount){
-                        Log::debug("Payment Successful!");
-                        Order::where('id',$order->id)->update(['status'=>3,'payment_method_id'=>2,'paid_at'=>Carbon::now(),'paid'=>$order->paid + $getPrice]);
+                    if($order->paid + $getPrice < $order->amount){
+                        Log::debug('Momo Paid in half!');
+                        Order::where('id',$order->id)->update(['status'=>2,'paid'=>$order->paid + $getPrice]);
                         $v1->moveToFolder('MomoReceive');
                     }
-                    else if($order->paid >= 0 && $order->paid < $order->amount){
-                        Log::debug('Paid in half!');
-                        Order::where('id',$order->id)->update(['status'=>2,'paid'=>$order->paid + $getPrice]);
+                    else if($order->paid + $getPrice >= $order->amount){
+                        Log::debug("Momo Payment Successful!");
+                        Order::where('id',$order->id)->update(['status'=>3,'payment_method_id'=>2,'paid_at'=>Carbon::now(),'paid'=>$order->paid + $getPrice]);
                         $v1->moveToFolder('MomoReceive');
                     }
                 }

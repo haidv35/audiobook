@@ -17,6 +17,7 @@ use App\OrderDetail;
 use App\PaymentMethod;
 use App\PaymentCode;
 use App\Product;
+use App\ProductConfigurable;
 
 class UserController extends Controller
 {
@@ -31,13 +32,17 @@ class UserController extends Controller
         $paid_order_count = Order::where('user_id',Auth::id())->count();
         $paid_product_count = 0; $paid = 0; $total = 0; $balance = 0;
         foreach($paid_orders as $key => $value){
-            $paid_product_count += $value->order_details->count();
+            foreach($value->order_details as $val){
+                if($val->category != null){
+                    ++$paid_product_count;
+                }
+            }
             $paid += $value->paid;
         }
         foreach($paid_orders as $key => $value){
             $total += $value->amount;
         }
-        $balance = $total - $paid;
+        $balance = ($total > $paid) ? $total - $paid : 0;
         return view('user.dashboard')->with(['paid_order_count'=>$paid_order_count,'paid_product_count'=>$paid_product_count,'paid'=>$paid,'balance'=>$balance]);
     }
 
@@ -105,6 +110,12 @@ class UserController extends Controller
             $amount = $orders->amount - $orders->paid;
             $payment_codes = PaymentCode::where(['user_id'=>Auth::id(),'order_id'=>$orders->id])->get();
             $order_detail_items = Order::find($orders->id)->order_details;
+            foreach($order_detail_items as $key => $value){
+                $configurableProduct = Product::where([['id',$value->product_id],['type','configurable']])->first();
+                if(isset($configurableProduct)){
+                    unset($order_detail_items[$key]);
+                }
+            }
             return view('user.order-details')->with(['status'=>$orders->status,'order_detail_items'=>$order_detail_items,'bank'=>$bank,'momo'=>$momo,'payment_codes'=>$payment_codes,'amount'=>$amount]);
         }
     }
@@ -114,34 +125,48 @@ class UserController extends Controller
         $orders = Order::where(['user_id'=>Auth::id(),'status'=>'paid'])->get();
         foreach($orders as $order){
             foreach($order->order_details as $order_detail){
-                $list_items_purchased->add($order_detail->product);
+                if($order_detail->product->type == 'simple'){
+                    $list_items_purchased->add($order_detail->product);
+                }
             }
         }
-        $data['data'] = $list_items_purchased;
+        $list_items_purchased = $list_items_purchased->unique('id');
+        $list = collect();
+        foreach($list_items_purchased as $item){
+            $list->add($item);
+        }
+        $data['data'] = $list;
         return json_encode($data);
     }
 
     public function getListItemPurchased($product_id = null){
-        $recommendProduct = Product::limit(4)->inRandomOrder()->get();
-        $this->convertToVnString($recommendProduct);
-        $list_items_purchased = collect();
-        $orders = Order::where(['user_id'=>Auth::id(),'status'=>'paid'])->get();
-        foreach($orders as $order){
-            foreach($order->order_details as $order_detail){
-                $list_items_purchased->add($order_detail->product);
-            }
-        }
-        if($product_id === null){
-            return view('user.purchased')->with(['list_items_purchased'=>$list_items_purchased]);
+        $getConfigurableProduct = ProductConfigurable::with('simple_products')->where([['product_configurable_id',$product_id]])->get();
+        if(0 != count($getConfigurableProduct)){
+            return view('user.items-purchased')->with(['getConfigurableProduct'=>$getConfigurableProduct]);
         }
         else{
-            foreach($list_items_purchased as $item){
-                if(strval($item->id) === $product_id){
-                    $product_links = $item->product_links;
-                    return view('user.items-purchased')->with(['product_info'=>$item,'product_links'=>$product_links,'recommendProduct'=>$recommendProduct]);
+            $recommendProduct = Product::where('type','simple')->limit(4)->inRandomOrder()->get();
+            $this->convertToVnString($recommendProduct);
+            $list_items_purchased = collect();
+            $orders = Order::where(['user_id'=>Auth::id(),'status'=>'paid'])->get();
+
+            foreach($orders as $order){
+                foreach($order->order_details as $order_detail){
+                    $list_items_purchased->add($order_detail->product);
                 }
             }
-            return redirect()->route('user.homepage');
+            if($product_id == null){
+                return view('user.purchased');
+            }
+            else{
+                foreach($list_items_purchased as $item){
+                    if(strval($item->id) === $product_id){
+                        $product_links = $item->product_links;
+                        return view('user.items-purchased')->with(['product_info'=>$item,'product_links'=>$product_links,'recommendProduct'=>$recommendProduct]);
+                    }
+                }
+                return redirect()->route('user.homepage');
+            }
         }
     }
 

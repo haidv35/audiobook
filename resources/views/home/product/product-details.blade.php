@@ -1,122 +1,158 @@
 @extends('home.layouts.app')
+@section('meta-tag')
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ $product->title }}" />
+    <meta property="og:description" content="{{ $product->short_description }}" />
+    <meta property="og:image" content="{{ $product->image }}" />
+@endsection
 @section('app-main')
 <div class="row" style="margin:2rem 0 5rem 0;">
-    <div class="card">
-        <div class="row no-gutters">
-            <aside class="col-lg-6">
-                <article class="gallery-wrap">
-                    <div class="img-big-wrap">
-                        <div> <a href="javascript:void(0)"><img src="{{ $product->image }}"></a></div>
-                    </div>
-                    @if ($product->demo_link != '0')
-                        <hr>
-                        <h4 class="text-center mt-5">Nghe thử</h4>
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8" style="background:#fff">
-                                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url={{ $product->demo_link }}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
-                            </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="row no-gutters">
+                <aside class="col-lg-6">
+                    <article class="gallery-wrap">
+                        <div class="img-big-wrap">
+                            <div> <a href="javascript:void(0)"><img src="{{ $product->image }}"></a></div>
                         </div>
-                    @endif
-                    {{-- <div class="thumbs-wrap">
-                        <a href="" class="item-thumb"> <img src="{{ $product->image }}"></a>
-                        <a href="" class="item-thumb"> <img src="{{ $product->image }}"></a>
-                        <a href="" class="item-thumb"> <img src="{{ $product->image }}"></a>
-                    </div> --}}
-                </article>
-            </aside>
-            <main class="col-lg-6 border-left">
-                <article class="content-body">
-
-                    <h2 class="title">{{ $product->title }}</h2>
-
-
-                    <div class="mb-3">
-                        <var class="price h4">@if ($product->discount_price != 0) {{ $product->discount_price }} @else {{ $product->regular_price }} @endif</var>
-                        <span class="text-muted">/sản phẩm</span>
-                    </div> <!-- price-detail-wrap .// -->
-
-                    {!! $product->description->content !!}
-                    <div class="rating-wrap my-3">
-                        <ul class="rating-stars">
-                            <li style="width:100%" class="stars-active">
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </li>
-                            <li>
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                            </li>
-                        </ul>
-                        <p class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> {{ $product->qty_purchased }} người đã mua </p>
-                    </div> <!-- rating-wrap.// -->
-                    <hr>
-                    {{-- <div class="form-row">
-                        <div class="form-group col-md flex-grow-0">
-                            <label>Số lượng</label>
-                            <div class="input-group mb-3 input-spinner">
-                                <div class="input-group-prepend">
-                                    <button class="btn btn-light" type="button" id="button-minus"> - </button>
-                                </div>
-                                <input type="text" class="form-control" id="" value="1">
-                                <div class="input-group-append">
-                                    <button class="btn btn-light" type="button" id="button-plus"> + </button>
+                        @if ($product->demo_link != '0')
+                            <hr>
+                            <h4 class="text-center mt-5">Nghe thử</h4>
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8" style="background:#fff">
+                                    <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url={{ $product->demo_link }}&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
                                 </div>
                             </div>
-                        </div>
-                    </div> --}}
-                    @php
-                        $check_ordered = 0;
-                    @endphp
-                    @if (0 != count($orderedProducts))
-                        @foreach ($orderedProducts as $item)
-                            @if ($item[0]->product_id === $product->id)
-                                @php
-                                    $check_ordered = 1;
-                                @endphp
-                                @if ($item[0]->status == 'paid')
-                                    <a href="/user/purchased/{{ $item[0]->product_id }}" class="btn btn-success btn-block">
-                                        <i class="fas fa-shopping-cart"></i>
-                                        <span class="text">Xem nội dung sản phẩm</span>
-                                    </a>
-                                @elseif($item[0]->status == 'unpaid')
-                                    <a href="/pay/{{ $item[0]->order_code}}" class="btn btn-outline-warning btn-block">Thanh toán <i
-                                    class="fa fa-check"></i>
-                                    </a>
-                                @endif
-                            @break
+                        @endif
+                        @if($configurableProductItem != null)
+                            <h4 class="text-center bg-success text-light">Combo sách gồm có: </h4>
+                            <div class="thumbs-wrap">
+                                @foreach ($configurableProductItem as $item)
+                                    <a href="{{ route('product-details',['id'=>$item->simple_products->id,'path'=>$item->simple_products->path])}}" class="item-thumb" style="" target="_blank" data-toggle="tooltip" data-placement="top" title="{{ $item->simple_products->title }}"> <img src="{{ $item->simple_products->image }}"></a>
+                                @endforeach
+                            </div>
+                        @endif
+                    </article>
+                </aside>
+                <main class="col-lg-6 border-left">
+                    <article class="content-body">
+
+                        <h2 class="title">{{ $product->title }}</h2>
+
+                        <div class="mb-3">
+                            {{-- @if($product->regular_price != 0 && $product->discount_price != 0)
+                                <var class="price h4">@if ($product->discount_price != 0) {{ $product->discount_price }} @else {{ $product->regular_price }} @endif</var>
+                            @else
+                                <var class="h4 text-dark">0 <span style="text-decoration: underline;">đ</span></var>
+                            @endif --}}
+                            @if($product->discount_price == 0 && $product->regular_price == 0)
+                                <span style="color: red;">Miễn Phí</span>
+                            @else
+                                <var class="price h4">
+                                    @if ($product->discount_price != 0)
+                                        {{ $product->discount_price }}
+                                    @else
+                                        {{ $product->regular_price }}
+                                    @endif
+                                </var>
+                                <span class="text-muted">/sản phẩm</span>
                             @endif
-                        @endforeach
-                    @endif
-                    @if ($check_ordered == 0)
-                        <a href="{{ Auth::user() ? '#' : '/login/#!' }}" class="btn btn-outline-primary {{ Auth::user() ? 'add-to-cart' : 'login-before_order' }}" data-id="{{ $product->id }}" data-title="{{ $product->title }}" data-category="{{ $product->category->name }}" data-regular_price="{{ $product->regular_price }}" data-discount_price="{{ $product->discount_price }}">
-                            <span class="text">Thêm vào giỏ hàng</span>
-                            <i class="fas fa-shopping-cart"></i>
-                        </a>
-                    @endif
-                </article> <!-- product-info-aside .// -->
-            </main> <!-- col.// -->
-        </div> <!-- row.// -->
-    </div> <!-- card.// -->
+                        </div> <!-- price-detail-wrap .// -->
+                        @if($product->short_description && $configurableProductItem != null)
+                            {!! $product->short_description !!}
+                        @endif
+                        @if($product->description)
+                            {!! $product->description->content !!}
+                        @endif
+
+                        <div class="rating-wrap my-3">
+                            <ul class="rating-stars">
+                                <li style="width:100%" class="stars-active">
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </li>
+                                <li>
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </li>
+                            </ul>
+                            <p class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> {{ $product->qty_purchased }} người đã mua </p>
+                        </div> <!-- rating-wrap.// -->
+                        <hr>
+                        {{-- <div class="form-row">
+                            <div class="form-group col-md flex-grow-0">
+                                <label>Số lượng</label>
+                                <div class="input-group mb-3 input-spinner">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-light" type="button" id="button-minus"> - </button>
+                                    </div>
+                                    <input type="text" class="form-control" id="" value="1">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-light" type="button" id="button-plus"> + </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+
+                        @if($product->regular_price == 0 && $product->discount_price == 0)
+                            <a href="{{ route('free',['id'=>$product->id]) }}" class="btn btn-success btn-block">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="text">Xem nội dung sản phẩm</span>
+                            </a>
+                        @else
+                            @php
+                                $check_ordered = 0;
+                            @endphp
+                            @if(0 != count($orderedProducts))
+                                @foreach ($orderedProducts as $item)
+                                    @if ($item->product_id === $product->id)
+                                        @php
+                                            $check_ordered = 1;
+                                        @endphp
+                                        @if ($item->status == 'paid')
+                                            <a href="/user/purchased/{{ $item->product_id }}" class="btn btn-success btn-block">
+                                                <i class="fas fa-shopping-cart"></i>
+                                                <span class="text">Xem nội dung sản phẩm</span>
+                                            </a>
+                                        @elseif($item->status == 'unpaid')
+                                            <a href="/pay/{{ $item->order_code}}" class="btn btn-outline-warning btn-block">Thanh toán <i
+                                            class="fa fa-check"></i>
+                                            </a>
+                                        @endif
+                                    @break
+                                    @endif
+                                @endforeach
+                            @endif
+                            @if ($check_ordered == 0)
+                                <a href="{{ Auth::user() ? '#' : '/login/#!' }}" class="btn btn-outline-primary {{ Auth::user() ? 'add-to-cart' : 'login-before_order' }}" data-id="{{ $product->id }}" data-title="{{ $product->title }}" data-category="@if(isset($product->category)) {{ $product->category->name }} @endif" data-regular_price="{{ $product->regular_price }}" data-discount_price="{{ $product->discount_price }}">
+                                    <span class="text">Thêm vào giỏ hàng</span>
+                                    <i class="fas fa-shopping-cart"></i>
+                                </a>
+                            @endif
+                        @endif
+                    </article> <!-- product-info-aside .// -->
+                </main> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- card.// -->
+    </div>
 </div>
 <div class="container-fluid">
     <div class="row mb-4">
-        <div class="col-xl-6">
+        <div class="col-lg-6">
             <div class="row">
                 <div class="col-12">
                     <h3 class="text-center bg-dark text-light">Bình luận</h3>
                 </div>
-                {{-- <div class="col-12">
-
-
-                </div> --}}
-                <div id="fb-root"></div>
-                <div class="fb-comments" data-href="{{ route('product-details',['id'=>$product->id,'path'=>$product->path])}}" data-order-by="time" data-width="100%" data-numposts="10" data-mobile="true"></div></<div>
+                <div class="col-12">
+                    <div id="fb-root"></div>
+                    <div class="fb-comments" data-href="{{ route('product-details',['id'=>$product->id,'path'=>$product->path])}}" data-order-by="time" data-width="100%" data-numposts="10" data-mobile="true"></div>
+                </div>
             </div>
 
         </div>
-        <div class="col-xl-6">
+        <div class="col-lg-6">
             <div class="col-lg-12">
                 <h3 class="text-center bg-dark text-light">Có thể bạn quan tâm</h3>
             </div>

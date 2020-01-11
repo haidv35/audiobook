@@ -15,16 +15,12 @@ class CreateProductsConfigurableTable extends Migration
     {
         Schema::create('products_configurable', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id')->unsigned()->nullable(false);
-            $table->string('title')->nullable(false);
-            $table->text('short_description')->nullable(false);
-            $table->string('image_link')->nullable(false);
-            $table->decimal('regular_price',8)->nullable(false);
-            $table->decimal('discount_price',8)->nullable(false)->default(0);
-            $table->integer('qty_purchased')->nullable(false)->default(0);
-            $table->timestamps();
+            $table->bigInteger('product_configurable_id')->unsigned()->nullable(false);
+            $table->bigInteger('product_simple_id')->unsigned()->nullable(false);
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('product_configurable_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_simple_id')->references('id')->on('products')->onDelete('cascade');
+
         });
     }
 

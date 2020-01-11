@@ -1,6 +1,10 @@
 $("#btn-submit").click(function(e) {
     e.preventDefault();
-
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        }
+    });
     let product_list = Array();
     let get_product_list = $('.selectpicker').selectpicker()[0].selectedOptions;
     $.each(get_product_list,function(k,v){
@@ -19,27 +23,18 @@ $("#btn-submit").click(function(e) {
     getFormData.append("short_description", shortDescription);
     $.ajax({
         type: "POST",
-        url: admin_product_configurable_store,
+        url: update_product_configurable_url,
         data: getFormData,
         dataType: "JSON",
         contentType: false,
         cache: false,
         processData: false,
         success: function(d) {
-            console.log(d);
             isSuccess(d);
             location.replace("/admin/product/configurable");
         },
         error: function(xhr, status, error) {
-            console.log(xhr);
-            let errorsData = JSON.parse(xhr.responseText).errors;
-            const s = new Set();
-            $.each(errorsData, function(key, value) {
-                s.add(String(value));
-            });
-            s.forEach(function(val) {
-                showStackBottomRight("error", "", val);
-            });
+            isError(xhr);
         }
     });
 });

@@ -67,7 +67,7 @@
                                 <div class="row">
                                     <div class="col-lg-10">
                                         <h4 class="list-group-item-title"> {{ $item->title }} </h4>
-                                        <p class="list-group-item-text text-muted"> Danh mục:  {{ $item->category }}</p>
+                                        <p class="list-group-item-text text-muted"> Danh mục:  {{ $item->category }} </p>
                                         <span class="text-muted">Giá tiền: </span><span class="price text-muted">{{ $item->price }}</span>
                                     </div>
                                     @if ($status === "paid")

@@ -7,7 +7,7 @@
                 <h4 class="card-title"> Danh sách sản phẩm </h4>
                 @foreach ($order_detail as $item)
                 <div class="list-group list-group-flush list-group-divider">
-                    <a href="/product-details/{{ $item->product_id }}" class="list-group-item list-group-item-action" target="_blank">
+                    <div class="list-group-item list-group-item-action" target="_blank">
                         <div class="list-group-item-figure">
                             <div class="">
                                 <img src="{{ $item->product->image }}" alt="" style="width:5rem;">
@@ -18,7 +18,7 @@
                             <h5 class="list-group-item-subtitle price"> {{ $item->price }} </h5>
                             <p class="list-group-item-text text-truncate"> {{ $item->category }} </p>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 @endforeach
             </div>
@@ -100,10 +100,20 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-3  d-flex align-items-center justify-content-start">
+                            <label for="excess_cash">Tiền thừa</label>
+                        </div>
+                        <div class="col-lg-12 col-xl-9">
+                            <input type="text" class="form-control price-lite" name="excess_cash" id="excess_cash" placeholder="" value="@if($order->paid > $order->amount) {{ $order->paid - $order->amount }} @endif" disabled="">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-3  d-flex align-items-center justify-content-start">
                             <label for="balance">Còn nợ</label>
                         </div>
                         <div class="col-lg-12 col-xl-9">
-                            <input type="text" class="form-control price-lite" name="balance" id="balance" placeholder="" value="{{ $order->amount - $order->paid }}" disabled="">
+                            <input type="text" class="form-control price-lite" name="balance" id="balance" placeholder="" value="@if($order->paid < $order->amount) {{ $order->amount - $order->paid }} @endif" disabled="">
                         </div>
                     </div>
                 </div>
