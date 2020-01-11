@@ -2,7 +2,7 @@
 
 # 						`AUDIO BOOK STORE`
 
-##### This is an ecommerce site that sells audio books with the following outstanding features:
+##### This is an ecommerce site that sells audiobook with the following outstanding features:
 
 - Simple interface, easy to use
 - Quick purchase integrated "**Momo**" auto payment
