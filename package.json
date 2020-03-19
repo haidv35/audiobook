@@ -21,10 +21,13 @@
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.10",
+        "serialize-javascript": ">=2.1.1",
+        "minimist": ">=1.2.2",
+        "acorn": ">=6.4.1"
     },
     "dependencies": {
-        "vue-draggable-nested-tree": "^2.2.18",
-        "serialize-javascript": ">=2.1.1"
+        "vue-draggable-nested-tree": "^2.2.18"
+        
     }
 }
